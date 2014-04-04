@@ -3,7 +3,7 @@ SKROLLS
 =======
 **Authors: Bine Repše, Nejc Sušin, Adrijan Šlutej**
 
-*Skrolls* is an online note-taking and sharing app that does not require registering. 
+**Skrolls** is an online note-taking and sharing app that does not require registering. 
 Individual documents (or Skrolls) are accessed by their filename. Any visitor can 
 view an existing Skroll by inputting its name. If such a name does not yet exist, 
 it will be created. Skrolls are simple .txt documents, but with some added 
