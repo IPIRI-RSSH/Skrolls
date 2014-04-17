@@ -9,15 +9,15 @@ var skrollsApp = angular.module('skrollsApp', [
 skrollsApp.config(['$routeProvider', 
     function ($routeProvider) {
         $routeProvider.
-            when('/skrolls', {
+            when('/data/skrolls', {
                 templateUrl: 'views/skrolls-list.html',
                 controller: 'SkrollListController'
             }).
-            when('/skrolls/s:skrollIDh.json', {
+            when('/data/skrolls/:skrollID', {
                 templateUrl: 'views/skroll.html',
                 controller: 'SkrollController'
             }).
             otherwise({
-                redirectTo: '/skrolls'
+                templateUrl: 'views/home.html'
             });
     }]);
