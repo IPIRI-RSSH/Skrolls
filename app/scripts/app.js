@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 var skrollsApp = angular.module('skrollsApp', [
     'ngRoute',
