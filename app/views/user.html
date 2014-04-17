@@ -4,8 +4,8 @@
 	<h3>Your Skrolls:</h3>
 	<div class="list">
 		<ul>
-			<li ng-repeat="skroll in skrolls">
-				<a href="#/skrolls/{{skroll.skrollID}}">{{skroll.name}}</a>
+			<li ng-repeat="skroll in user.skrolls">
+				<a href="/app/#/skrolls/{{skroll}}">{{skroll}}</a>
 			</li>
 		</ul>
 	</div>
