@@ -15,3 +15,9 @@ skrollControllers.controller('SkrollController', ['$scope', '$routeParams', '$ht
 			$scope.posts = data;
 		});
     }]);
+skrollControllers.controller('UserController', ['$scope', '$routeParams', '$http',
+	function ($scope, $routeParams, $http) {
+		$http.get('data/users/u' + $routeParams.userID + '.json').success(function(data) {
+			$scope.user = data;
+		});
+	}]);

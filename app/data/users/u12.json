@@ -1,14 +1,15 @@
 {
 	"userID": 12,
 	"username":"binerepse",
-	"Skrolls":[
-		"neki",
+	"email":"jure.novak@gmail.com",
+	"skrolls":[
+		"267125",
 		"tekst",
-		"skrol"
+		"skrol",
+		"aaa"
 	],
-	"last open":"neki",
-	"e-mail" : "jure.novak@gmail.com",
-	"password" : "jurenovak"
+	"lastOpen":"267125",
+	"password":"jurenovak"
 	
 }
 	
