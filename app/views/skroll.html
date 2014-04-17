@@ -1,15 +1,14 @@
 <div class="skroll">
 	<div>
 		<ul>
-			<li  ng-repeat = "post in posts">
-					<hr>
-					 {{post.posts.author}}  {{post.timestamp}}
-					 <p>
+
+			<li  ng-repeat = "post in posts.posts">
+					<hr />
+					 {{post.author}}  {{post.timestamp}}
+					<p>
 					{{post.text}}
 					</p>
 			</li>
 		</ul>
 	</div>
-
 </div>
-

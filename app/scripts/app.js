@@ -18,6 +18,6 @@ skrollsApp.config(['$routeProvider',
                 controller: 'SkrollController'
             }).
             otherwise({
-                templateUrl: '/index.html'
+                templateUrl: 'views/home.html'
             });
     }]);
