@@ -2,7 +2,8 @@
 
 var skrollsApp = angular.module('skrollsApp', [
     'ngRoute',
-    'skrollControllers'
+    'skrollControllers',
+	'skrollsServices'
 ]);
 
 
