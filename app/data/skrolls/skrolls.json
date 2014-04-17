@@ -1,13 +1,13 @@
 ﻿[
 	{
 		"age": 0,
-		"skrollID": "s267125h",
-		"name": "example",
+		"skrollID": "267125",
+		"name": "test",
 		"mark": 5
 	},
 	{
 		"age": 1,
-		"skrollID": "s267126h",
+		"skrollID": "267126",
 		"name": "2example",
 		"mark": 3 
 	}
