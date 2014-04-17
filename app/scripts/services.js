@@ -1,3 +1,5 @@
+'use strict';
+
 var skrollsServices = angular.module('skrollsServices', ['ngResource']);
 
 skrollsServices.factory('Skroll', ['$resource', 
