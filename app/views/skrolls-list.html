@@ -1,19 +1,19 @@
-<div class="skrolls-list">
+<div class="centre">
 	<h2>List of Skrolls</h2>
 	<br/>
 	<div class="options">
-		Search: <input type="text" ng-model="query">
+		Search: <input type="text" ng-model="query"><br><br>
 		Sort by: 
 		<select ng-model="sortBy">
 			<option value="name">Alphabetical</option>
 			<option value="age">Date</option>
 			<option value="mark">Rating</option>		
 		</select>
-	</div>
+	</div><br><br>
 	<div class="list">
 		<ul>
 			<li ng-repeat="skroll in skrolls | filter:query | orderBy:sortBy">
-				<a href="/app/#/skrolls/{{skroll.skrollID}}">{{skroll.name}}</a>
+				<a href="/#/skrolls/{{skroll.skrollID}}">{{skroll.name}}</a>
 			</li>
 		</ul>
 	</div>
