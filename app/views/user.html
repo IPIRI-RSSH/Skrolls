@@ -1,12 +1,13 @@
 <div class="centre">
 	<h2>Username: {{user.username}}</h2>
-	<h3>email: {{user.email}}</h3>
+	<h3>email: {{user.email}}</h3><br>
 	<h3>Your Skrolls:</h3>
 	<div class="list">
-		<ul>
-			<li ng-repeat="skroll in user.skrolls">
+		<ul class= "container">
+			<li class="animate-list" ng-repeat="skroll in user.skrolls">
 				<a href="/#/skrolls/{{skroll}}">{{skroll}}</a>
 			</li>
 		</ul>
-	</div>
+	</div><br>
+	<a href="/#/">-Home-</a>
 </div>
