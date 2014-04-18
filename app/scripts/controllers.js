@@ -1,6 +1,6 @@
 'use strict'
 
-var skrollControllers = angular.module('skrollControllers', []);
+var skrollControllers = angular.module('skrollControllers', ['ngAnimate']);
 
 skrollControllers.controller('SkrollListController', ['$scope', 'SkrollFact', function($scope, SkrollFact) {
 	$scope.skrolls = SkrollFact.query();

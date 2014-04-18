@@ -1,7 +1,42 @@
+html *{
+	font-family: arial, sans-serif;
+}
+body{
+	background-image:url('/images/connect.png');
+	background-repeat: repeat;
+}
 
-
-.centre
-{
+.centre{
 	text-align: center; 
 	margin-left: 50;
+}
+.container{
+	text-align: center; 
+	margin-left: 50;
+	max-width: 30%;
+	margin: auto;
+	padding: 20px 10px 20px 10px;
+	background: white;
+	border-radius: 8px;
+	box-shadow: 1px 1px 8px #888888;
+}
+.animate-list{
+	list-style: none;
+}
+.animate-list.ng-enter,
+.animate-list.ng-move,
+.animate-list.ng-leave {
+	-webkit-transition: all 0.2s linear;
+}
+.animate-list.ng-enter,
+.animate-list.ng-move,
+.animate-list.ng-leave.ng-leave-active {
+	opacity: 0;
+	max-height: 0px;
+}
+.animate-list.ng-enter.ng-enter-active,
+.animate-list.ng-move.ng-move-active
+{
+	opacity: 1;
+	max-height: 40px;
 }
