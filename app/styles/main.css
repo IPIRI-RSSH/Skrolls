@@ -6,22 +6,45 @@ body{
 	background-repeat: repeat;
 }
 
+.author{
+	color: green;
+}
+.time{
+	color: blue;
+}
+
 .centre{
 	text-align: center; 
 	margin-left: 50;
 }
-.container{
+.container,
+.container-wide {
 	text-align: center; 
 	margin-left: 50;
-	max-width: 30%;
+	max-width: 230px;
 	margin: auto;
 	padding: 20px 10px 20px 10px;
 	background: white;
 	border-radius: 8px;
 	box-shadow: 1px 1px 8px #888888;
 }
+
+textarea{
+	width: 200px;
+	height: 80px;
+	max-width: 380px;
+	max-height: 300px;
+}
+
+.container-wide{
+	max-width: 400px;
+}
 .animate-list{
 	list-style: none;
+	background: #F7F9FA;
+	padding-bottom: 10px;
+	margin-bottom: 10px;
+	border-radius: 8px;
 }
 .animate-list.ng-enter,
 .animate-list.ng-move,

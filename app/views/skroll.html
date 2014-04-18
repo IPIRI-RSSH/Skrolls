@@ -2,12 +2,18 @@
 	<div>
 		<ul class="container">
 			<li class="animate-list" ng-repeat = "post in posts.posts">
-					<hr />
-					 {{post.author}} //// {{post.timestamp}}
+					<span class="author" >{{post.author}} </span> //// 
+					<span class="time" >{{post.timestamp}} </span>
 					<p>
 					{{post.text}}
 					</p>
 			</li>
+		</ul><br>
+		<ul class="container-wide">
+			<textarea ng-model="textPost" ngMaxlength=1500 placeholder="Enter your message..." ></textarea><br>
+			<button ng-model="upload" >Upload...</button>
+			<button ng-model="post" >Post!</button>
 		</ul>
-	</div>
+	</div><br>
+	<a href="/#/">-Home-</a>
 </div>
