@@ -1,13 +1,13 @@
-'use strict'
 
 var skrollsApp = angular.module('skrollsApp', [
     'ngRoute',
     'skrollControllers',
-	'skrollsServices'
+	'skrollsServices',
+	'ngAnimate'
 ]);
 
 skrollsApp.config(['$routeProvider', 
-    function ($routeProvider) {
+    function($routeProvider) {
 		$routeProvider.
 			when('/skrolls', {
 				templateUrl: 'views/skrolls-list.html',

@@ -35,6 +35,7 @@ textarea{
 	border: 1px solid #dcdcdc;
 }
 .button-skroll{
+	position: relative;
 	text-align: left;
 	display: inline-block;
 	width: 80%;
@@ -64,7 +65,11 @@ textarea{
 .time{
 	color: #bbbbbb;
 }
-
+.right{
+	text-align: right;
+	position: absolute;
+	right: 20px;
+}
 .fixlink:link,
 .fixlink:visited{
 	color: #3cbde8;
