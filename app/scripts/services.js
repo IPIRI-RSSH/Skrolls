@@ -10,8 +10,8 @@ skrollsServices.factory('SkrollFact', ['$resource',
 	}]);
 
 skrollsServices.factory('UserFact', ['$resource',
-  function($resource){
-    return $resource('data/users/:userID.json', {}, {
-      query: {method:'GET', params:{userID:'user'}, isArray:false}
-    });
-  }]);
+  	function($resource){
+	    return $resource('data/users/:userID.json', {}, {
+	      	query: {method:'GET', params:{userID:'user'}, isArray:false}
+	    });
+  	}]);

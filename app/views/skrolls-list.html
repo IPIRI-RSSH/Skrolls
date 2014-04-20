@@ -1,21 +1,14 @@
-<div class="centre">
-	<h2>List of Skrolls</h2>
-	<br/>
-	<div class="options">
-		Search: <input type="text" ng-model="query"><br>
+<div class="container">
+	<h2>Browse all Skrolls</h2><br>
+		Search: <input class="textfield" type="text" ng-model="query"><br>
 		Sort by: 
-		<select ng-model="sortBy">
+		<select class="textfield" ng-model="sortBy">
 			<option value="name">Alphabetical</option>
 			<option value="age">Date</option>
-			<option value="mark">Rating</option>		
-		</select>
-	</div><br>
-	<div>
-		<ul class="container">
-			<li class="animate-list" ng-repeat="skroll in skrolls | filter:query | orderBy:sortBy">
-				<a href="/#/skrolls/{{skroll.skrollID}}">{{skroll.name}}</a>
-			</li>
-		</ul>
-	</div><br>
-	<a href="/#/">-Home-</a>
-</div>
+			<option value="mark">Rating</option>
+		</select><br><br><hr>
+		<li class="animate-list" ng-repeat="skroll in skrolls | filter:query | orderBy:sortBy">
+			<a class="button-skroll" href="/#/skrolls/{{skroll.skrollID}}">{{skroll.name}}</a>
+		</li>
+</div><br>
+<a href="/#/" class="fixlink">-Home-</a>
