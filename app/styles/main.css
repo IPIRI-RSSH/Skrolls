@@ -7,17 +7,12 @@ body{
 	margin-bottom: 40px;
 	text-align: center; 
 }
-hr{
-	color: red;
-
-}
-
 
 textarea{
 	width: 95%;
 	height: 80px;
 	max-width: 95%;
-	min-width: 160px;
+	min-width: 95%;
 	max-height: 300px;
 	border-radius: 3px;
 	border: 1px solid #bababa;
@@ -29,9 +24,13 @@ textarea{
 	padding: 8px 20px 8px 20px;
 	margin: 5px 5px 5px 5px;
 	background-color: #f9f9f9;
+	display: inline-block;
 	border-radius: 3px;
 	text-align: center;
+	text-decoration: none;
+	font-size: 13px;
 	font-weight: bold;
+	color: black;
 	border: 1px solid #dcdcdc;
 }
 .button-skroll{
@@ -50,6 +49,10 @@ textarea{
 	box-shadow: 0px 0px 1px #888888;
 }
 
+.button:active{
+	background: #f1f1f1; 
+}
+
 .textfield{
 	border-radius: 2px;
 	border: 1px solid #bababa;
@@ -57,6 +60,10 @@ textarea{
 }
 .textfield:focus{
 	box-shadow: 1px 1px 2px #888888;
+}
+.author,
+.time{
+	font-size: 14px;
 }
 .author{
 	color: #417fb5;
@@ -98,15 +105,17 @@ textarea{
 	background: #F7F9FA;
 	padding: 0px 5px 10px 5px;
 	margin-bottom: 10px;
+	border-radius: 8px;
 }
-.animate-list{
+.animate-list,
+.animate-fixed{
 	list-style: none;
 	border-radius: 8px;
 }
-.animate-list.ng-enter,
+.animate-list.ng-enter, 
 .animate-list.ng-move,
-.animate-list.ng-leave {
-	-webkit-transition: all 0.2s linear;
+.animate-list.ng-leave{
+	-webkit-transition: all 0.3s linear;
 }
 .animate-list.ng-enter,
 .animate-list.ng-move,
@@ -115,8 +124,40 @@ textarea{
 	max-height: 0px;
 }
 .animate-list.ng-enter.ng-enter-active,
-.animate-list.ng-move.ng-move-active
+.animate-list.ng-move.ng-move-active 
 {
 	opacity: 1;
-	max-height: 40px;
+	max-height: 80px;
 }
+
+.animate-fixed.ng-enter,
+.animate-fixed.ng-move,
+.animate-fixed.ng-leave,
+.animate-fixed.ng-leave.ng-leave-active,
+.animate-fixed.ng-enter.ng-enter-active,
+.animate-fixed.ng-move.ng-move-active{ 
+    -webkit-transition: 400ms cubic-bezier(0.000, 0.000, 0.580, 1.000) all;
+    -moz-transition: 400ms cubic-bezier(0.000, 0.000, 0.580, 1.000) all;
+    -ms-transition: 400ms cubic-bezier(0.000, 0.000, 0.580, 1.000) all;
+    -o-transition: 400ms cubic-bezier(0.000, 0.000, 0.580, 1.000) all;
+    transition: 400ms cubic-bezier(0.000, 0.000, 0.580, 1.000) all;
+    position: relative;
+    display: block;
+    overflow: hidden;
+    text-overflow: clip;
+    white-space:nowrap;
+} 
+ 
+.animate-fixed.ng-enter,
+.animate-fixed.ng-move,
+.animate-fixed.ng-leave.ng-leave-active {
+    opacity: 0;
+    height: 0px;
+}
+ 
+.animate-fixed.ng-enter.ng-enter-active,
+.animate-fixed.ng-move.ng-move-active{
+    opacity: 1;
+    height: 40px;
+}
+

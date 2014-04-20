@@ -1,7 +1,9 @@
 <div class="container">
 	<h3> Enter Skroll name: </h3>
-	<input class="textfield" type="text" placeholder="new Skroll" id="skrollName" />
-	<input class="button" type="submit" value="Open" /><br><br><hr>
+	<form>
+		<input class="textfield" ng-model="skrollname" type="text" placeholder="new Skroll"/>
+		<a class="button" href="/#/s/{{skrollname}}">Open</a><br><br><hr>
+	</form>
 	<h3> Log in: </h3>
 	<div>
 		<input class="textfield" type="text" placeholder="Email" id="useremail" />
