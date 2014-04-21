@@ -2,7 +2,7 @@
   "skrollID": "00000",
   "ownerID": "u0",
   "name": "About",
-  "visibility": "link",
-  "permissions": "readonly",
+  "visibility": "linkable",
+  "permissions": "read-only",
   "collabs": []
 }

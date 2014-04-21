@@ -1,21 +1,34 @@
+'use strict';
+angular.module('skrollControllers', ['ngAnimate'])
 
-var skrollControllers = angular.module('skrollControllers', ['ngAnimate']);
-
-skrollControllers.controller('HomeController', ['$scope', function($scope) {
+.controller('HomeController', ['$scope', function($scope) {
 	$scope.skrollname='';
 	$scope.email='';
 	$scope.pass='';
-}]);
-skrollControllers.controller('SkrollListController', ['$scope', 'SkrollListFact', function($scope, SkrollListFact) {
+}])
+.controller('SkrollListController', ['$scope', 'SkrollListFact', function($scope, SkrollListFact) {
 	$scope.skrolls = SkrollListFact.query();
 	$scope.sortBy = 'name';
-}]);
-skrollControllers.controller('SkrollController', ['$scope', '$routeParams', 'SkrollFact', function($scope, $routeParams, SkrollFact) {
+}])
+.controller('SkrollController', ['$scope', '$routeParams', 'SkrollFact', 'HeadFact', function($scope, $routeParams, SkrollFact, HeadFact) {
+    HeadFact.get({headFile: 's' + $routeParams.skrollID + 'h.json'}, function(){}).$promise.then(
+		function( value ){
+			$scope.head = value; 
+			if(value.permissions==="writeable"){
+				$scope.posting=true;
+			} else {
+				$scope.posting=false;
+			}
+		},
+		function( error ){SkrollFact.save({skrollFile: 's' +  $routeParams.skrollID + 'h.json'}, function(){})}
+	)
     SkrollFact.get({skrollFile: 's' + $routeParams.skrollID + '.json'}, function(){}).$promise.then(
-		function( value ){$scope.posts = value},
+		function( value ){
+			$scope.posts = value; 
+		},
 		function( error ){SkrollFact.save({skrollFile: 's' +  $routeParams.skrollID + '.json'}, function(){})}
 	)
-}]);
-skrollControllers.controller('UserController', ['$scope', '$routeParams', 'UserFact', function($scope, $routeParams, UserFact) {
+}])
+.controller('UserController', ['$scope', '$routeParams', 'UserFact', 'HeadFact', function($scope, $routeParams, UserFact, HeadFact) {
 	$scope.user = UserFact.get({userFile: 'u' + $routeParams.userID + '.json'}, function() {});
 }]);

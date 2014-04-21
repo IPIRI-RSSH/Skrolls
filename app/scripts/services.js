@@ -1,12 +1,16 @@
+'use strict';
 
-var skrollsServices = angular.module('skrollsServices', ['ngResource']);
+angular.module('skrollsServices', ['ngResource'])
 
-skrollsServices.factory('SkrollFact', ['$resource', function($resource){
+	.factory('SkrollFact', ['$resource', function($resource){
 		return $resource('data/skrolls/:skrollFile');
-	}]);
-skrollsServices.factory('SkrollListFact', ['$resource', function($resource){
+	}])
+	.factory('HeadFact', ['$resource', function($resource){
+		return $resource('data/skrolls/:headFile');
+	}])
+	.factory('SkrollListFact', ['$resource', function($resource){
 		return $resource('data/skrolls/skrolls.json');
-	}]);
-skrollsServices.factory('UserFact', ['$resource', function($resource){
+	}])
+	.factory('UserFact', ['$resource', function($resource){
 	    return $resource('data/users/:userFile');
-  	}]);
+	}]);

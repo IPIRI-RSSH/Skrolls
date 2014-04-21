@@ -7,7 +7,11 @@ body{
 	margin-bottom: 40px;
 	text-align: center; 
 }
-
+select{
+	border-radius: 2px;
+	border: 1px solid #bababa;
+	padding: 2px 3px 2px 3px;
+}
 textarea{
 	width: 95%;
 	height: 80px;
@@ -19,6 +23,18 @@ textarea{
 	padding: 2px 3px 2px 3px;
 }
 
+.title{
+	color: #417fb5;
+	font-weight: bold;
+	font-size: 22px;
+	display: block;
+}
+.subtext{
+	margin: 1px,1px,1px,1px;
+	font-size: 12px;
+	font-weight: bold;
+	color: #777777;
+}
 .button,
 .button-skroll{
 	padding: 8px 20px 8px 20px;

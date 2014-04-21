@@ -1,10 +1,10 @@
 <div class="container">
-	<h2>{{user.username}}</h2>
+	<h2 class="title">{{user.username}}</h2>
 	<h3>{{user.email}}</h3><br><hr>
 	<h3>Your Skrolls:</h3>
 	<div class="animated-fixed">
 		<li class="animate-list" ng-repeat="skroll in user.skrolls">
-			<div skroll-button></div>
+			<div skroll-button></div><br>{{skroll.name}}
 		</li>
 	</div>
 </div>

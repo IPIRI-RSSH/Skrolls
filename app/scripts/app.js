@@ -1,12 +1,14 @@
+'use strict';
 
-var skrollsApp = angular.module('skrollsApp', [
+angular.module('skrollsApp', [
     'ngRoute',
     'skrollControllers',
 	'skrollsServices',
+	'skrollsDirectives',
 	'ngAnimate'
-]);
+])
 
-skrollsApp.config(['$routeProvider', 
+.config(['$routeProvider', 
     function($routeProvider) {
 		$routeProvider.
 			when('/browse', {
