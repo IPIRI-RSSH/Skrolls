@@ -5,16 +5,10 @@
 		<a class="button" href="/#/s/{{skrollname}}">Open</a><br><br><hr>
 	</form>
 	<h3> Log in: </h3>
-	<div>
-		<input class="textfield" type="text" placeholder="Email" id="useremail" />
-	</div>
-	<div>
-		<input class="textfield" type="password" placeholder="Password" id="password" />
-	</div>
-	<div>
-		<input class="button" type="submit" value="Log in" />
-		<input class="button" type="submit" value="Register" />
-	</div>
+	<input class="textfield" ng-model="email" type="text" placeholder="Email"/>
+	<input class="textfield" ng-model="pass" type="password" placeholder="Password"/>
+	<input ng-click="log()" class="button" type="submit" value="Log in" />
+	<input ng-click="reg()" class="button" type="submit" value="Register" />
 </div>
 
 
