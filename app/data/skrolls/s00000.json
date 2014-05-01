@@ -1,0 +1,25 @@
+{
+  "skrollID": "00000",
+  "postCount": 3,
+  "posts":
+  [
+    {
+      "localID": 1,
+      "author": "???",
+      "timestamp": 0,
+      "text": "Authors of Skrolls: Bine Repse, Nejc Susin, Adrijan Slutej"
+    },
+	{
+      "localID": 2,
+      "author": "???",
+      "timestamp": 0,
+      "text": "Project started in march 2014, @FRI"
+    },
+	{
+      "localID": 3,
+      "author": "???",
+      "timestamp": 0,
+      "text": "Enjoy!"
+    }
+  ]
+}
