@@ -69,6 +69,7 @@ textarea{
 	text-decoration: none;
 	color: black;
 }
+
 .button:hover,
 .button-skroll:hover{
 	border: 1px solid #828282;
@@ -90,13 +91,18 @@ textarea{
 .author,
 .time{
 	font-size: 14px;
+	position: absolute;
+	top: 1px;
 }
 .author{
 	color: #417fb5;
 	font-weight: bold;
+	text-align: left;
+	left: 8px;
 }
 .time{
 	color: #bbbbbb;
+	right: 8px;
 }
 .right{
 	text-align: right;
@@ -128,6 +134,7 @@ textarea{
 	max-width: 30%;
 }
 .post-div{
+	position: relative;
 	background: #F7F9FA;
 	padding: 0px 5px 10px 5px;
 	margin-bottom: 10px;

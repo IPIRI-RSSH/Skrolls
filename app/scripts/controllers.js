@@ -9,7 +9,7 @@ angular.module('skrollControllers', ['ngAnimate','ngResource','ngRoute'])
 		UserFact.get({userFile:'u12.json'}).$promise.then(
 		function( value ){
 			$scope.user = value;
-			$location.path('/#/u/12');
+			
 		},
 		function( error ){})
 		
