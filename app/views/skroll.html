@@ -5,15 +5,15 @@
 			<span class="subtext">{{head.visibility}} | {{head.permissions}}</span><br><br>
 			<li class="animate-list" ng-repeat = "post in posts.posts">
 				<div class="post-div">
-					<span class="author" >{{post.author}} </span> //// 
-					<span class="time" >{{post.timestamp}} </span>
+					<span class="author" >{{post.author}} </span> 
+					<span class="time" >{{post.timestamp | date:'HH:mm | dd/MM/yyyy'}} </span><br>
 					<p>
 					{{post.text}}
 					</p>
 				</div>
 			</li>
-		</ul><br>
-		<div ng-show="posting">
+		</ul>
+		<div ng-show="posting"><br>
 			<ul class="container-wide">
 				<textarea ng-model="textPost" ngMaxlength=1500 placeholder="Enter your message..." ></textarea><br>
 				<button class="button" ng-model="upload" >Upload...</button>

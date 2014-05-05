@@ -6,37 +6,37 @@
     {
       "localID": 1,
       "author": "C",
-      "timestamp": 160420141539,
+      "timestamp": 1398956122000,
       "text": "Hello, World!"
     },
     {
       "localID": 2,
       "author": "GeorgeBush",
-      "timestamp": 160420141555,
+      "timestamp": 1399006042000,
       "text": "I <3 SKROLLS!!!"
     },
     {
       "localID": 3,
       "author": "BillGates",
-      "timestamp": 160420141555,
+      "timestamp": 1398975802000,
       "text": "How much do you want for this?"
     },
     {
       "localID": 4,
       "author": "DalaiLama",
-      "timestamp": 160420151525,
+      "timestamp": 1399070062000,
       "text": "WAZZAP?"
     },
     {
       "localID": 5,
       "author": "GenghisKhan",
-      "timestamp": 160420151545,
+      "timestamp": 1399250036000 ,
       "text": "All your bases are belong to us!"
     },
     {
       "localID": 6,
       "author": "Spock",
-      "timestamp": 160420171555,
+      "timestamp": 1402090022000 ,
       "text": "Live long and prosper."
     }
   ]

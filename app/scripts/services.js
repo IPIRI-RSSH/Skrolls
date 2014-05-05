@@ -14,3 +14,4 @@ angular.module('skrollsServices', ['ngResource'])
 	.factory('UserFact', ['$resource', function($resource){
 	    return $resource('data/users/:userFile');
 	}]);
+	
