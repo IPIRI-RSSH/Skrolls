@@ -1,19 +1,43 @@
 {
-    "skrollID": "267125",
-    "postCount": 2,
-    "posts":[
-      {
-          "localID": 1,
-          "author": "binerepse",
-          "timestamp": 160420141539,
-          "text": "Hello World, this is a post!"
-      },
-      {
-          "localID": 2,
-          "author": "anonymous",
-          "timestamp": 160420141555,
-          "text": "Google it! http://www.google.com"
-      }
-      ]
-  
+  "skrollID": "267125",
+  "postCount": 6,
+  "posts":
+  [
+    {
+      "localID": 1,
+      "author": "C",
+      "timestamp": 1398956122000,
+      "text": "Hello, World!"
+    },
+    {
+      "localID": 2,
+      "author": "GeorgeBush",
+      "timestamp": 1399006042000,
+      "text": "I <3 SKROLLS!!!"
+    },
+    {
+      "localID": 3,
+      "author": "BillGates",
+      "timestamp": 1398975802000,
+      "text": "How much do you want for this?"
+    },
+    {
+      "localID": 4,
+      "author": "DalaiLama",
+      "timestamp": 1399070062000,
+      "text": "WAZZAP?"
+    },
+    {
+      "localID": 5,
+      "author": "GenghisKhan",
+      "timestamp": 1399250036000 ,
+      "text": "All your bases are belong to us!"
+    },
+    {
+      "localID": 6,
+      "author": "Spock",
+      "timestamp": 1402090022000 ,
+      "text": "Live long and prosper."
+    }
+  ]
 }

@@ -4,14 +4,23 @@
 		<title>Skrolls</title>
 		<meta charset="utf-8">
 		<link rel="stylesheet" type="text/css" href="styles/main.css">
-		<script src="scripts/angular.min.js"></script>
+		<script src="bower_components/angular/angular.js"></script>
         <script src="bower_components/angular-route/angular-route.js"></script>
 		<script src="bower_components/angular-resource/angular-resource.js"></script>
+		<script src="bower_components/angular-animate/angular-animate.js"></script>
         <script src="scripts/controllers.js"></script>
 		<script src="scripts/app.js"></script>
 		<script src="scripts/services.js"></script>
+		<script src="scripts/directives.js"></script>
 	</head>
 	<body>
-		<div ng-view></div>
-	</body>	
+		<div class="view cont">
+			<div ng-view></div>
+		</div><br>
+		<a href="/#/" class="fixlink">-Home-</a>
+		|
+		<a href="/#/s/00000" class="fixlink">-About-</a>
+		|
+		<a href="/#/browse" class="fixlink">-Browse-</a>
+	</body>
 </html>

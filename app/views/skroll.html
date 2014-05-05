@@ -1,14 +1,24 @@
 <div class="centre">
 	<div>
-		<ul>
-
-			<li  ng-repeat = "post in posts.posts">
-					<hr />
-					 {{post.author}} //// {{post.timestamp}}
+		<ul class="container-wide">
+			<span class="title">{{head.name}}</span>
+			<span class="subtext">{{head.visibility}} | {{head.permissions}}</span><br><br>
+			<li class="animate-list" ng-repeat = "post in posts.posts">
+				<div class="post-div">
+					<span class="author" >{{post.author}} </span> 
+					<span class="time" >{{post.timestamp | date:'HH:mm | dd/MM/yyyy'}} </span><br>
 					<p>
 					{{post.text}}
 					</p>
+				</div>
 			</li>
 		</ul>
+		<div ng-show="posting"><br>
+			<ul class="container-wide">
+				<textarea ng-model="textPost" ngMaxlength=1500 placeholder="Enter your message..." ></textarea><br>
+				<button class="button" ng-model="upload" >Upload...</button>
+				<button class="button" ng-model="post" >Post!</button>
+			</ul>
+		</div>
 	</div>
 </div>
