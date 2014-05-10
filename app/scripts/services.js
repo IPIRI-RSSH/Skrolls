@@ -1,12 +1,13 @@
 'use strict';
 
-angular.module('skrollsServices', ['ngResource'])
+angular.module('skrollsServices', ['ngResource','firebase'])
 
-	.factory('SkrollFact', ['$resource', function($resource){
-		return $resource('data/skrolls/:skrollFile');
+
+	.factory('FireFact', ['$firebase', function($firebase){
+		return $firebase(new Firebase('https://skrollsapp.firebaseio.com/skrolls/:skrollid'));
 	}])
-	.factory('HeadFact', ['$resource', function($resource){
-		return $resource('data/skrolls/:headFile');
+	.factory('SkrollFact', ['$resource', function($resource){
+		return $resource('https://skrollsapp.firebaseio.com/skrolls/:skrollid');
 	}])
 	.factory('SkrollListFact', ['$resource', function($resource){
 		return $resource('data/skrolls/skrolls.json');
