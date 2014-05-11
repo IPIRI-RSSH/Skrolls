@@ -1,12 +1,6 @@
 'use strict';
 
-angular.module('skrollsApp', [
-    'ngRoute',
-    'skrollControllers',
-	'skrollsServices',
-	'skrollsDirectives',
-	'ngAnimate'
-])
+angular.module('skrollsApp', ['ngRoute','skrollControllers','skrollsServices', 'skrollsDirectives'])
 
 .config(['$routeProvider', 
     function($routeProvider) {

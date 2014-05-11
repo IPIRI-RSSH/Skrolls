@@ -4,7 +4,7 @@ html *{
 }
 body{
 	margin: 0px 0px 0px 0px;
-	padding: 10px 0px 0px 0px;
+	padding: 10px 0px 15px 0px;
 	top: 0px;
 	bottom: 0px;
 
@@ -30,6 +30,7 @@ textarea{
 	max-height: 300px;
 	border-radius: 3px;
 	border: 1px solid #bababa;
+	margin: 5px 0px 5px 0px;
 	padding: 2px 3px 2px 3px;
 }
 
@@ -44,6 +45,14 @@ textarea{
 	font-weight: bold;
 	color: #777777;
 }
+
+.boldtext1{
+	font-weight: bold;
+	font-size: 14px;
+	display: inline-block;
+
+}
+
 .button,
 .button-skroll{
 	padding: 8px 20px 8px 20px;
@@ -79,14 +88,25 @@ textarea{
 	background: #f1f1f1; 
 }
 
-.textfield{
+.textfield,
+.textfield-name{
 	border-radius: 2px;
 	border: 1px solid #bababa;
 	padding: 2px 3px 2px 3px;
 }
-.textfield:focus{
+.textfield:focus,
+.textfield-name{
 	box-shadow: 1px 1px 2px #888888;
 }
+
+.textfield-name{
+	min-width: 60px;
+	max-width: 100px;
+	width: auto;
+	display: inline-block;
+	box-shadow: 0px 0px 0px #888888;
+}
+
 .author,
 .time{
 	font-size: 14px;
