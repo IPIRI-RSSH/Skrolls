@@ -81,6 +81,12 @@ textarea{
 	background: url('/images/googleloginicon.png');
 }
 
+.g-plus{
+	position: relative;
+	margin-right: 10px;
+	margin-left: auto;
+}
+
 .incorrect{
 	display: block;
 	font-size: 14px;

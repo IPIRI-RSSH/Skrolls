@@ -57,6 +57,7 @@ angular.module('skrollControllers', ['ngAnimate','ngResource','ngRoute'])
 		}
    	});
 	$scope.message='';
+	$scope.url=document.URL;
 	$scope.posts=$scope.skroll.$child('posts');
 	console.log(nameFact.username);
 	$scope.displayname=nameFact.username;
