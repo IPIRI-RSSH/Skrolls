@@ -1,5 +1,5 @@
 'use strict';
-angular.module('skrollControllers', ['ngAnimate','ngResource','ngRoute'])
+angular.module('skrollControllers', ['ngAnimate','ngResource','ngRoute',])
 
 .controller('HomeController', ['$scope', 'UserFact', function($scope, UserFact) {
 	$scope.skrollname='';
@@ -22,24 +22,26 @@ angular.module('skrollControllers', ['ngAnimate','ngResource','ngRoute'])
 	$scope.skrolls = SkrollListFact.query();
 	$scope.sortBy = 'name';
 }])
-.controller('SkrollController', ['$scope', '$routeParams', 'SkrollFact', 'HeadFact', function($scope, $routeParams, SkrollFact, HeadFact) {
-    HeadFact.get({headFile: 's' + $routeParams.skrollID + 'h.json'}).$promise.then(
-		function( value ){
-			$scope.head = value; 
-			if(value.permissions==="writeable"){
-				$scope.posting=true;
-			} else {
-				$scope.posting=false;
-			}
-		},
-		function( error ){SkrollFact.save({skrollFile: 's' +  $routeParams.skrollID + 'h.json'})}
-	)
-    SkrollFact.get({skrollFile: 's' + $routeParams.skrollID + '.json'}).$promise.then(
-		function( value ){
-			$scope.posts = value; 
-		},
-		function( error ){SkrollFact.save({skrollFile: 's' +  $routeParams.skrollID + '.json'})}
-	)
+.controller('SkrollController', ['$scope', '$routeParams', '$firebase', 'SkrollFact', function($scope, $routeParams, $firebase, SkrollFact) {
+    $scope.skroll=$firebase(new Firebase('https://skrollsapp.firebaseio.com/skrolls/' + $routeParams.skrollID));
+   	$scope.skroll.$on('loaded', function(){
+		if($scope.skroll.head['permissions']==="writeable"){
+			$scope.posting=true;
+		} else {
+			$scope.posting=false;
+		}
+   	});
+	$scope.message='';
+	$scope.posts=$scope.skroll.$child('posts');
+		$scope.displayname='';
+		$scope.post= function(){
+			var count=$scope.skroll.head['postCount'];
+			$scope.posts[count] = {text: $scope.message, author: $scope.displayname, timestamp: Firebase.ServerValue.TIMESTAMP};
+			$scope.posts.$save(count);
+			count++;
+			$scope.skroll.$child('head').$update({postCount: count});
+		}
+
 }])
 .controller('UserController', ['$scope', '$routeParams', 'UserFact', 'HeadFact', function($scope, $routeParams, UserFact, HeadFact) {
 	$scope.user = UserFact.get({userFile: 'u' + $routeParams.userID + '.json'}, function() {});
