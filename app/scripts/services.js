@@ -9,9 +9,6 @@ angular.module('skrollsServices', ['ngResource','firebase'])
 	.factory('SkrollFact', ['$resource', function($resource){
 		return $resource('https://skrollsapp.firebaseio.com/skrolls/:skrollid');
 	}])
-	.factory('SkrollListFact', ['$resource', function($resource){
-		return $resource('data/skrolls/skrolls.json');
-	}])
 	.factory('UserFact', ['$resource', function($resource){
 		var UserFact={
 			errMsg: "", 

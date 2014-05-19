@@ -5,7 +5,8 @@ angular.module('skrollsDirectives', [])
 .directive('skrollButton', function() {
 	return {
 		restrict: 'A',
-		template: '<a class="button-skroll" href="/#/s/{{skroll.skrollID}}">{{skroll.name}} <span class="right">{{skroll.mark}}</span>'
+		template: '<a class="button-skroll" href="/#/s/{{skroll.skrollID}}">{{skroll.head.name}} <span class="right">{{skroll.head.postCount}}</span></a>'
+					
 	};
 })
 .directive('changeName', function() {
