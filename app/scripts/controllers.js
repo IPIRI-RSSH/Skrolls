@@ -18,8 +18,8 @@ angular.module('skrollControllers', ['ngAnimate','ngResource','ngRoute',])
 		UserFact.save({userFile:'u456.json'});
 	};
 }])
-.controller('SkrollListController', ['$scope', 'SkrollListFact', function($scope, SkrollListFact) {
-	$scope.skrolls = SkrollListFact.query();
+.controller('SkrollListController', ['$scope', '$routeParams', '$firebase', 'SkrollFact', function($scope, $routeParams, $firebase, SkrollFact) {
+	$scope.skrolls = $firebase(new Firebase('https://skrollsapp.firebaseio.com/skrolls'));
 	$scope.sortBy = 'name';
 }])
 .controller('SkrollController', ['$scope', '$routeParams', '$firebase', 'SkrollFact', function($scope, $routeParams, $firebase, SkrollFact) {
