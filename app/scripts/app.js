@@ -15,7 +15,7 @@ angular.module('skrollsApp', ['ngRoute','skrollControllers','skrollsServices', '
 			}).
 			 when('/u/:userID', {
 				templateUrl: 'views/user.html',
-				controller: 'UserController'
+				controller: 'HomeController'
 			}).
 			otherwise({
 				templateUrl: 'views/home.html',
