@@ -1,12 +1,11 @@
 <div class="container">
-	<h3> Enter Skroll name: </h3>
-	<form>
-		<input class="textfield" ng-model="skrollname" type="text" placeholder="new Skroll"/><br>
-		<a class="button" href="/#/s/{{skrollname}}">Open</a><br><br><hr>
-	</form>
-	<h3> Log in: </h3>
+	<div enter-skroll></div><hr>
+	<h3> Sign in: </h3>
+	<span class="incorrect" ng-show="UserFact.incorrect">{{UserFact.errMsg}}</span>
 	<input class="textfield" ng-model="email" type="text" placeholder="Email"/>
 	<input class="textfield" ng-model="pass" type="password" placeholder="Password"/><br>
-	<input ng-click="log()" class="button" type="submit" value="Log in" />
-	<input ng-click="reg()" class="button" type="submit" value="Register" />
+	<input ng-click="log()" class="button" type="submit" value="Sign in" />
+	<input ng-click="reg()" class="button" type="submit" value="Register" /><br><br>
+	<button class="button-googlelogin" ng-click="googlelog()">Sign in with Google</button>
+	<button class="button-gitlogin" ng-click="gitlog()">Sign in with GitHub</button>
 </div>

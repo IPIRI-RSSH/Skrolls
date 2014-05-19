@@ -15,12 +15,15 @@
 		</ul>
 		<div ng-show="posting"><br>
 			<ul class="container-wide">
-				<div>
-					<span class="boldtext1">Display name: </span>
-					<input class="textfield-name" ng-model="displayname" type="text"> </input>
-				</div>
+				<div change-name></div>
 				<textarea ng-model="message" ngMaxlength=1500 placeholder="Enter your message..." ></textarea><br>
-				<button class="button" ng-model="upload" >Upload...</button>
+				<div class="upload-div"> 
+					<button class="button" ng-model="upload" >
+						<input type="file"></input>
+						Upload...
+					</button>
+					
+				</div>	
 				<button class="button" ng-model="post" ng-click="post()" >Post!</button>
 			</ul>
 		</div>
