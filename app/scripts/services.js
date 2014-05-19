@@ -82,8 +82,6 @@ angular.module('skrollsServices', ['ngResource','firebase'])
 			var fireRef= new Firebase('https://skrollsapp.firebaseio.com/users/'+usr);
 			var nameobj=$firebase(fireRef);
 			nameFact.username=nameobj;
-			console.log(nameobj.username);
-			console.log(nameFact.username);
 			return nameFact.username;
 		}
 		
