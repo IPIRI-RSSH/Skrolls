@@ -3,6 +3,7 @@ angular.module('skrollControllers', ['ngAnimate','ngResource','ngRoute'])
 
 .controller('HomeController', ['$scope', '$routeParams', 'UserFact', 'nameFact', '$firebase', function($scope, $routeParams, UserFact, nameFact, $firebase) {
 	var nameget=nameFact.getName($routeParams.userID);
+	var scope = $scope;
 	// push new skroll to base
 	$scope.setSkroll = function() {
 		$scope.skrollsRef = $firebase(new Firebase('https://skrollsapp.firebaseio.com/skrolls'));
@@ -16,16 +17,20 @@ angular.module('skrollControllers', ['ngAnimate','ngResource','ngRoute'])
 	}
 	
 	$scope.displayname=nameget;
-
 	$scope.UserFact=UserFact;
 	$scope.skrollname='';
-	$scope.user=UserFact.user;
-	$scope.email=UserFact.username;
-	$scope.pass=UserFact.pass;
+	$scope.user=$scope.UserFact.user;
+	$scope.email=$scope.UserFact.username;
+	$scope.pass=$scope.UserFact.pass;
+
+	UserFact.refresh = function() {
+		if (!scope.$$phase) scope.$apply();
+	};
 	
 	$scope.log = function() {
 		if (validate()){
 			UserFact.log($scope.email, $scope.pass);
+			var i =1;
 		}
 	};
 	$scope.reg = function() {
@@ -43,6 +48,9 @@ angular.module('skrollControllers', ['ngAnimate','ngResource','ngRoute'])
    			UserFact.logout();
    			console.log("logging out...");
    			window.location = "/#/";
+   	}
+   	$scope.changename = function(){
+   		
    	}
 	function validate(){
 		if($scope.email!= null && $scope.pass.length >= 6){

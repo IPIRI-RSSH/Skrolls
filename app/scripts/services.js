@@ -37,6 +37,7 @@ angular.module('skrollsServices', ['ngResource','firebase'])
 			    }
 			   UserFact.incorrect=true;
 			   console.log(error);
+			   
 		  	} else if (user) {
 		  		UserFact.incorrect=false;
 		  		doLogin(user);
@@ -44,6 +45,7 @@ angular.module('skrollsServices', ['ngResource','firebase'])
 		    	console.log('LOGGED IN = User ID: ' + user.uid + ', Provider: ' + user.provider);
 		  	} else {
 		  	}
+		  	UserFact.refresh();
 			});
 		
 		UserFact.log = function(email, pass) {
@@ -62,6 +64,7 @@ angular.module('skrollsServices', ['ngResource','firebase'])
 		};
 		function doLogin(user){
 			window.location = "/#/u/"+user.id;
+			UserFact.refresh();
 		}
 		UserFact.logout = function(){
 	   		auth.logout();
