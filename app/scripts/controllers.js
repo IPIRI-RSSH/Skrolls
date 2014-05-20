@@ -71,23 +71,25 @@ angular.module('skrollControllers', ['ngAnimate','ngResource','ngRoute'])
 	}
 
 	$scope.upload_image = function (image) {
-		if (!image.valid) return;
+		if(image != null){
+			if (!image.valid) return;
 
-		var imagesRef, safename, imageUpload;
-		
-		image.isUploading = true;
-		imageUpload = {
-			isUploading: true,
-			data: image.data,
-			name: image.filename
-		};
-		imagesRef = new Firebase('https://skrollsapp.firebaseio.com'+ '/images');
+			var imagesRef, safename, imageUpload;
+			
+			image.isUploading = true;
+			imageUpload = {
+				isUploading: true,
+				data: image.data,
+				name: image.filename
+			};
+			imagesRef = new Firebase('https://skrollsapp.firebaseio.com'+ '/images');
 
-		imagesRef.add(imageUpload).then(function(ref){
-			imagesRef.child(ref.name).child('isUploading').remove();
-			$scope.imglink=ref.name;
-			post();
-		});
+			imagesRef.add().then(function(ref){
+				imagesRef.$child(ref.name).set({"data": image.data, "name": image.filename});
+				$scope.imglink=ref.name;
+			})}
+		post()
+	}
 	
 				/*$scope.$apply(function () {
 					console.log("uploaded");
@@ -98,9 +100,7 @@ angular.module('skrollControllers', ['ngAnimate','ngResource','ngRoute'])
 					image.data = undefined;
 					image.filename = undefined;
 				});*/
-		
-		
-	};
+	
 	
 
 }])
