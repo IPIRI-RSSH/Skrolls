@@ -19,5 +19,27 @@ angular.module('skrollsDirectives', [])
 		restrict: 'A',
 		template: '<h3> Enter Skroll name: </h3><form><input class="textfield" ng-model="skrollname" type="text" placeholder="new Skroll"/><br><a class="button" ng-mousedown="setSkroll()" ng-mouseup="update()"  ng-href="/#/s/{{skrollURL}}">Open</a><br><br></form>'
 	};
-});
+})
+
+.directive('imgDisp', ['$log', function ($log) {
+	// Used to embed images stored in Firebase
+	/*
+	Required attributes:
+		fp-src (The name of an image stored in Firebase)
+	*/
+	return {
+		link: function (scope, elem, attrs) {
+			var dataRef = new Firebase('https://skrollsapp.firebaseio.com/images/'+attrs.fpSrc);
+			elem.attr('alt', attrs.fpSrc);
+			dataRef.once('value', function (snapshot) {
+				var image = snapshot.val();
+				if (!image) {
+				}else{
+					elem.attr('src', image.data);
+				}
+			});
+		},
+		restrict: 'A'
+	};
+}]);
 

@@ -68,24 +68,37 @@ angular.module('skrollControllers', ['ngAnimate','ngResource','ngRoute'])
 }])
 .controller('SkrollController', ['$scope', '$routeParams', '$firebase', 'nameFact', function($scope, $routeParams, $firebase, nameFact) {
     $scope.skroll=$firebase(new Firebase('https://skrollsapp.firebaseio.com/skrolls/' + $routeParams.skrollID));
+   	$scope.imagesRef =$firebase(new Firebase('https://skrollsapp.firebaseio.com'+ '/images'));
+
    	$scope.skroll.$on('loaded', function(){
-		if($scope.skroll.head['permissions']==="writeable"){
-			$scope.posting=true;
-		} else {
-			$scope.posting=false;
-		}
+		$scope.posting=true;
    	});
 	$scope.message='';
 	$scope.url=document.URL;
 	$scope.posts=$scope.skroll.$child('posts');
-	console.log(nameFact.username);
 	$scope.displayname=nameFact.username;
 	$scope.post= function(){
 		var count=$scope.skroll.head['postCount'];
-		$scope.posts[count] = {text: $scope.message, author: $scope.displayname.username, timestamp: Firebase.ServerValue.TIMESTAMP};
+		$scope.posts[count] = {text: $scope.message, image: $scope.imglink, author: $scope.displayname.username, timestamp: Firebase.ServerValue.TIMESTAMP};
 		$scope.posts.$save(count);
 		count++;
 		$scope.skroll.$child('head').$update({postCount: count});
+	}
+
+	$scope.upload_image = function (image) {
+		if(image != null && image.valid){
+			var imagesRef, safename, imageUpload;
+			image.isUploading = true;
+			imageUpload = {
+				isUploading: true,
+				data: image.data,
+				name: image.filename
+			};
+			$scope.imagesRef.$add({"data": image.data, "name": image.filename}).then(function(ref){
+				$scope.imglink=ref.name();
+				$scope.post();
+			})}
+		
 	}
 
 }])
