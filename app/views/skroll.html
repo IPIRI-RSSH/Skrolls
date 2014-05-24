@@ -8,7 +8,7 @@
 					<span class="author" >{{post.author}} </span> 
 					<span class="time" >{{post.timestamp | date:'HH:mm | dd/MM/yyyy'}} </span><br>
 					<p>
-					<div img-disp></div>
+					<img img-disp fp-src="{{post.image}}" class=postimg></img>
 					{{post.text}}
 					</p>
 				</div>
@@ -27,7 +27,7 @@
 						</button>
 						
 					</div>	
-					<input class="button" type="submit" ng-model="post" ng-click="post()" >Post!</button>
+					<input class="button" type="submit" ng-model="post"></button>
 				</form>
 			</ul>
 		</div>

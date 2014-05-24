@@ -34,6 +34,13 @@ textarea{
 	padding: 2px 3px 2px 3px;
 }
 
+.postimg {
+	display: block;
+	width: 70%;
+	max-height: 300px;
+	margin: 0 auto 10px auto;
+}
+
 .button-gitlogin,
 .button-googlelogin{
 	padding: 5px 10px 5px 10px;
