@@ -18,7 +18,7 @@ angular.module('skrollsDirectives', [])
 .directive('enterSkroll', function() {
 	return {
 		restrict: 'A',
-		template: '<h3> Enter Skroll name: </h3><form><input class="textfield" ng-model="skrollname" type="text" placeholder="new Skroll"/><br><a class="button" ng-mousedown="setSkroll()" ng-mouseup="update()"  ng-href="/#/s/{{skrollURL}}">Open</a><br><br></form>'
+		template: '<h3> Enter Skroll name: </h3><form><input class="textfield" ng-model="skrollname" type="text" placeholder="new Skroll"/><br><p class="button" ng-click="setSkroll()"  >Open</p><br><br></form>'
 	};
 });
 
