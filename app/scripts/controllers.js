@@ -51,12 +51,19 @@ angular.module('skrollControllers', ['ngAnimate','ngResource','ngRoute'])
 	$scope.displayname=nameget;
 	$scope.UserFact=UserFact;
 	$scope.skrollname='';
-	$scope.user=$scope.UserFact.user;
-	$scope.email=$scope.UserFact.username;
+	$scope.user=UserFact.user;
+	$scope.email=$scope.user.email;
 	$scope.pass=$scope.UserFact.pass;
 
 	UserFact.refresh = function() {
-		if (!scope.$$phase) scope.$apply();
+		if (!$scope.$$phase) {
+			$scope.$apply(function() {
+				if(typeof UserFact.user.email === 'undefined'){
+					$scope.email=UserFact.user.username;
+				}
+				else $scope.email=UserFact.user.email;
+			});
+		} 
 	};
 	UserFact.switchloggedin = function(){
 		if($scope.loggedout == true){
@@ -69,6 +76,11 @@ angular.module('skrollControllers', ['ngAnimate','ngResource','ngRoute'])
 			$scope.loggedin=false;
 			$scope.loginform=true;
 		}
+	};
+	UserFact.makeName = function(id){
+		var userref=$firebase(new Firebase('https://skrollsapp.firebaseio.com/users/'+id));
+		userref.$set({name: "New user"});
+		console.log(userref);
 	}
 	$scope.log = function() {
 		if (validate()){
@@ -111,7 +123,7 @@ angular.module('skrollControllers', ['ngAnimate','ngResource','ngRoute'])
     $scope.skrolls=$firebase(new Firebase('https://skrollsapp.firebaseio.com/skrolls'));
 	$scope.sortBy = 'name';
 }])
-.controller('SkrollController', ['$scope', '$routeParams', '$firebase', 'nameFact', function($scope, $routeParams, $firebase, nameFact) {
+.controller('SkrollController', ['$scope', '$routeParams', '$firebase', 'redirector', 'nameFact', function($scope, $routeParams, $firebase, redirector, nameFact) {
     $scope.skroll=$firebase(new Firebase('https://skrollsapp.firebaseio.com/skrolls/' + $routeParams.skrollID));
    	$scope.imagesRef =$firebase(new Firebase('https://skrollsapp.firebaseio.com'+ '/images'));
 
@@ -129,7 +141,9 @@ angular.module('skrollControllers', ['ngAnimate','ngResource','ngRoute'])
 		count++;
 		$scope.skroll.$child('head').$update({postCount: count});
 	}
-
+	$scope.home = function(){
+		console.log("gone home");
+	}
 	$scope.upload_image = function (image) {
 		if(image != null && image.valid){
 			var imagesRef, safename, imageUpload;
