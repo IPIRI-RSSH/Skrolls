@@ -1,11 +1,7 @@
-<div class="container">
-	<div enter-skroll></div><hr>
-	<h3> Sign in: </h3>
-	<span class="incorrect" ng-show="UserFact.incorrect">{{UserFact.errMsg}}</span>
-	<input class="textfield" ng-model="email" type="text" placeholder="Email"/>
-	<input class="textfield" ng-model="pass" type="password" placeholder="Password"/><br>
-	<input ng-click="log()" class="button" type="submit" value="Sign in" />
-	<input ng-click="reg()" class="button" type="submit" value="Register" /><br><br>
-	<button class="button-googlelogin" ng-click="googlelog()">Sign in with Google</button>
-	<button class="button-gitlogin" ng-click="gitlog()">Sign in with GitHub</button>
+<div class="column">
+
+	<div class="container center">
+		<div enter-skroll></div>
+	</div>
 </div>
+<div signinbutton-directive></div>

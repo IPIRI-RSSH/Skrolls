@@ -15,7 +15,9 @@ angular.module('skrollControllers', ['ngAnimate','ngResource','ngRoute'])
 		$scope.skrollsRefNew = $firebase(new Firebase('https://skrollsapp.firebaseio.com/skrolls/' + $scope.skrollURL));
 		$scope.skrollsRefNew.$set({head: {name: $scope.skrollname, permissions: "writeable", postCount: 0, visibility: "public", skrollID: $scope.skrollURL}});
 	}
-	
+	$scope.loggedout=true;
+	$scope.loggedin=false;
+	$scope.loginform=false;
 	$scope.displayname=nameget;
 	$scope.UserFact=UserFact;
 	$scope.skrollname='';
@@ -26,11 +28,21 @@ angular.module('skrollControllers', ['ngAnimate','ngResource','ngRoute'])
 	UserFact.refresh = function() {
 		if (!scope.$$phase) scope.$apply();
 	};
-	
+	UserFact.switchloggedin = function(){
+		if($scope.loggedout == true){
+			$scope.loggedout=false;
+			$scope.loggedin=true;
+			$scope.loginform=false;
+		}
+		else{
+			$scope.loggedout=true;
+			$scope.loggedin=false;
+			$scope.loginform=true;
+		}
+	}
 	$scope.log = function() {
 		if (validate()){
 			UserFact.log($scope.email, $scope.pass);
-			var i =1;
 		}
 	};
 	$scope.reg = function() {
@@ -46,11 +58,6 @@ angular.module('skrollControllers', ['ngAnimate','ngResource','ngRoute'])
 	}
 	$scope.logout = function(){
    			UserFact.logout();
-   			console.log("logging out...");
-   			window.location = "/#/";
-   	}
-   	$scope.changename = function(){
-   		
    	}
 	function validate(){
 		if($scope.email!= null && $scope.pass.length >= 6){
@@ -61,6 +68,14 @@ angular.module('skrollControllers', ['ngAnimate','ngResource','ngRoute'])
  			$scope.UserFact.incorrect=true;
 		}
 	}
+	$scope.switchLogin = function(){
+		if(scope.loginform == false){
+			$scope.loginform=true;
+			document.getElementById("loginname").focus();
+		}
+		else $scope.loginform=false;
+	}
+	
 }])
 .controller('SkrollListController', ['$scope', '$routeParams', '$firebase', 'SkrollFact', function($scope, $routeParams, $firebase, SkrollFact) {
 	$scope.skrolls = $firebase(new Firebase('https://skrollsapp.firebaseio.com/skrolls'));
@@ -97,8 +112,11 @@ angular.module('skrollControllers', ['ngAnimate','ngResource','ngRoute'])
 			$scope.imagesRef.$add({"data": image.data, "name": image.filename}).then(function(ref){
 				$scope.imglink=ref.name();
 				$scope.post();
-			})}
-		
+			})
+		}
+		else{
+			$scope.post();
+		}
 	}
 
 }])

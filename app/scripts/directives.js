@@ -11,13 +11,13 @@ angular.module('skrollsDirectives', [])
 .directive('changeName', function() {
 	return {
 		restrict: 'A',
-		template: '<span class="boldtext1">Display name: </span><input class="textfield-name" ng-model="displayname.username" type="text"></input><input ng-click="changename()" class="button" type="submit" value="Apply" /> '
+		template: '<span class="boldtext1">Post as: </span><input class="textfield-name" ng-model="displayname.username" type="text" maxlength="15"></input>'
 	};
 })
 .directive('enterSkroll', function() {
 	return {
 		restrict: 'A',
-		template: '<h3> Enter Skroll name: </h3><form><input class="textfield" ng-model="skrollname" type="text" placeholder="new Skroll"/><br><a class="button" ng-mousedown="setSkroll()" ng-mouseup="update()"  ng-href="/#/s/{{skrollURL}}">Open</a><br><br></form>'
+		template: '<h3> Enter Skroll name: </h3><form><input class="textfield" ng-model="skrollname" type="text" placeholder="new Skroll"  autofocus="autofocus"/><br><a class="button" ng-mousedown="setSkroll()" ng-mouseup="update()"  ng-href="/#/s/{{skrollURL}}">Open</a><br><br></form>'
 	};
 })
 
@@ -41,5 +41,12 @@ angular.module('skrollsDirectives', [])
 		},
 		restrict: 'A'
 	};
-}]);
+}])
 
+.directive('signinbuttonDirective', function() {
+	return {
+
+		restrict: 'A',
+		templateUrl:'/views/userstatus.html'
+	};
+})

@@ -4,6 +4,7 @@
 		<title>Skrolls</title>
 		<meta charset="utf-8">
 		<link rel="stylesheet" type="text/css" href="styles/main.css">
+		<link rel="stylesheet" href="styles/font-awesome.min.css">
 		<script src="bower_components/angular/angular.js"></script>
         <script src="bower_components/angular-route/angular-route.js"></script>
 		<script src="bower_components/angular-resource/angular-resource.js"></script>
@@ -15,6 +16,7 @@
 		<script src="scripts/app.js"></script>
 		<script src="scripts/services.js"></script>
 		<script src="scripts/directives.js"></script>
+
 		<script type="text/javascript">
 		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 		  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -34,13 +36,12 @@
 
 	</head>
 	<body>
-		<div class="view cont">
-			<div ng-view></div>
-		</div><br>
-		<a href="/#/" class="fixlink">-Home-</a>
-		|
-		<a href="/#/s/00000" class="fixlink">-About-</a>
-		|
-		<a href="/#/browse" class="fixlink">-Browse-</a>
+		<div class="container-small dock  foot">
+			<a href="/#/"><i id="button-home" class="fa fa-home fa-2x fa-fw" title="Go home"></i></a>
+			<a href="/#/browse"><i id="button-browse" class="fa fa-list fa-2x fa-fw" title="Browse Skrolls"></i></a>
+			<a href="/#/help"><i id="button-help" class="fa fa-question fa-2x fa-fw" title="View help"></i></a>
+		</div>
+		
+		<div ng-view></div>
 	</body>
 </html>

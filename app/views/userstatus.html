@@ -1,0 +1,30 @@
+<div class="container-small ontop logindock">
+		<div ng-show="loggedout" class="pointer" ng-click="switchLogin()">
+			<i id="button-sign" class="fa fa-sign-in fa-2x fa-fw" title="Sign in"></i>
+			<span class="docklabel">Sign in</span>
+		</div>
+		<div ng-show="loggedin">
+			<h4 class="userstatustext">{{email}}</h4>
+			<div class="cplist">
+				<a class="cplist-item"><i class="fa fa-user fa-fw"></i>&nbsp; My Skrolls</a>
+				<a class="cplist-item"><i class="fa fa-cog fa-fw"></i>&nbsp; Settings</a>
+				<a class="cplist-item" ng-click="logout()"><i class="fa fa-sign-out fa-fw"></i>&nbsp; Log out</a>
+			</div>
+			
+		</div>
+</div>
+
+<div ng-show="loginform">
+	<div class="fade" ng-click="switchLogin()"></div>
+	<br><br>
+	<div class="container ontop">
+		<h3> Sign in: </h3>
+		<span class="incorrect" ng-show="UserFact.incorrect">{{UserFact.errMsg}}</span>
+		<input class="textfield" ng-model="email" type="text" placeholder="Email" autofocus/>
+		<input class="textfield" id="loginname" ng-model="pass" type="password" placeholder="Password"/><br>
+		<input ng-click="log()" class="button" type="submit" value="Sign in" />
+		<input ng-click="reg()" class="button" type="submit" value="Register" /><br><br>
+		<button class="button-googlelogin" ng-click="googlelog()">Sign in with Google</button>
+		<button class="button-gitlogin" ng-click="gitlog()">Sign in with GitHub</button>
+	</div>
+</div>

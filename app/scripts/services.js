@@ -40,7 +40,8 @@ angular.module('skrollsServices', ['ngResource','firebase'])
 			   
 		  	} else if (user) {
 		  		UserFact.incorrect=false;
-		  		doLogin(user);
+		  		UserFact.switchloggedin();
+		  		//doLogin(user);
 		  		UserFact.user=user;
 		    	console.log('LOGGED IN = User ID: ' + user.uid + ', Provider: ' + user.provider);
 		  	} else {
@@ -63,17 +64,19 @@ angular.module('skrollsServices', ['ngResource','firebase'])
 			});
 		};
 		function doLogin(user){
-			window.location = "/#/u/"+user.id;
 			UserFact.refresh();
 		}
 		UserFact.logout = function(){
 	   		auth.logout();
+	   		UserFact.switchloggedin();
 	   	}
 		UserFact.googlelog = function(){
 			auth.login('google');
+			UserFact.switchloggedin();
 		}
 		UserFact.gitlog = function(){
 			auth.login('github');
+			UserFact.switchloggedin();
 		}
 		return UserFact;
 	}])
