@@ -142,6 +142,7 @@ angular.module('skrollControllers', ['ngAnimate','ngResource','ngRoute'])
 			$scope.imagesRef.$add({"data": image.data, "name": image.filename}).then(function(ref){
 				$scope.imglink=ref.name();
 				$scope.post();
+				image=null;
 			})
 		}
 		else{
