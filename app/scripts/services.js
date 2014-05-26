@@ -41,7 +41,6 @@ angular.module('skrollsServices', ['ngResource','firebase'])
 		  	} else if (user) {
 		  		UserFact.incorrect=false;
 		  		UserFact.switchloggedin();
-		  		//doLogin(user);
 		  		UserFact.user=user;
 		    	console.log('LOGGED IN = User ID: ' + user.uid + ', Provider: ' + user.provider);
 		  	} else {
@@ -58,9 +57,11 @@ angular.module('skrollsServices', ['ngResource','firebase'])
 		UserFact.reg = function(email, pass) {
 			auth.createUser(email, pass, function(error, user) {
 	  		if (!error) {
-	    		console.log('REGISTERED User Id: ' + user.uid + ', Email: ' + user.email);
+	    		UserFact.makeName(user.id);
+	    		UserFact.log(email, pass);
 	    		doLogin(user);
 	  			}
+	  			else console.log(error);
 			});
 		};
 		function doLogin(user){
@@ -72,11 +73,9 @@ angular.module('skrollsServices', ['ngResource','firebase'])
 	   	}
 		UserFact.googlelog = function(){
 			auth.login('google');
-			UserFact.switchloggedin();
 		}
 		UserFact.gitlog = function(){
 			auth.login('github');
-			UserFact.switchloggedin();
 		}
 		return UserFact;
 	}])
@@ -93,4 +92,13 @@ angular.module('skrollsServices', ['ngResource','firebase'])
 		
 		return nameFact;
 		}])
+	.factory('redirector', ['$location', '$route', function($location, $route, target){
+		var redirector={};
+		redirector.go = function(target){
+			$location.replace();
+			$location.path(target);
+			$route.reload();
+		}
+		return redirector;
+	}])
 	

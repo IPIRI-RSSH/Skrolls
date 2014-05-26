@@ -46,9 +46,15 @@ angular.module('skrollsDirectives', [])
 
 .directive('signinbuttonDirective', function() {
 	return {
-
 		restrict: 'A',
 		templateUrl:'/views/userstatus.html'
+	};
+})
+
+.directive('dockdir', function() {
+	return {
+		restrict: 'A',
+		templateUrl:'/views/dock.html'
 	};
 })
 
