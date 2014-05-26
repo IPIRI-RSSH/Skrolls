@@ -41,7 +41,17 @@ hr{
 	height: 1px;
 	border: 0px solid #dddddd;
 }
-
+.wordcloud{
+	z-index: 30;
+	position: absolute;
+	background-image: url('/images/80pixb.png');
+	border-radius: 8px;
+	margin: auto;
+	margin-top: 50px;
+	left: 0px;
+	right: 0px;
+	width: 90%;
+}
 .cplist{
 	text-align: left;
 }

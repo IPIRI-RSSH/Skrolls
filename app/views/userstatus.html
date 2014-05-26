@@ -1,13 +1,14 @@
 <div class="container-small ontop logindock">
-		<div ng-show="loggedout" class="pointer" ng-click="switchLogin()">
-			<i id="button-sign" class="fa fa-sign-in fa-2x fa-fw" title="Sign in"></i>
+		<div ng-show="loggedout" class="pointer" id="button-sign" ng-click="switchLogin()">
+			<i class="fa fa-sign-in fa-2x fa-fw" title="Sign in"></i>
 			<span class="docklabel">Sign in</span>
 		</div>
 		<div ng-show="loggedin">
 			<h4 class="userstatustext">{{email}}</h4>
 			<div class="cplist">
+				<a class="cplist-item" onclick="gocloud()"><i class="fa fa-magic fa-fw"></i>&nbsp; Wordcloud</a>
 				<a class="cplist-item"><i class="fa fa-user fa-fw"></i>&nbsp; My Skrolls</a>
-				<a class="cplist-item"><i class="fa fa-cog fa-fw"></i>&nbsp; Settings</a>
+				<!--<a class="cplist-item"><i class="fa fa-cog fa-fw"></i>&nbsp; Settings</a>-->
 				<a class="cplist-item" ng-click="logout()"><i class="fa fa-sign-out fa-fw"></i>&nbsp; Log out</a>
 			</div>
 			

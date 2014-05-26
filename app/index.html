@@ -17,20 +17,14 @@
 		<script src="scripts/services.js"></script>
 		<script src="scripts/directives.js"></script>
         <script src="scripts/analyticstracking.js"></script>
-		<script src="bower_components/d3/d3.min.js"></script>
+        <script src="bower_components/d3/d3.min.js"></script>
 		<script src="bower_components/d3/d3.js"></script>
 		<script src="bower_components/d3/d3.layout.cloud.js"></script>
 	</head>
 	<body>
-		<div>
+		<div class="wordcloud" id="clouddiv" onclick="gocloud()">
 			<script src="scripts/wordCloud.js"></script>
 		</div>
-		<div class="container-small dock  foot">
-			<a href="/#/"><i id="button-home" class="fa fa-home fa-2x fa-fw" title="Go home"></i></a>
-			<a href="/#/browse"><i id="button-browse" class="fa fa-list fa-2x fa-fw" title="Browse Skrolls"></i></a>
-			<a href="/#/help"><i id="button-help" class="fa fa-question fa-2x fa-fw" title="View help"></i></a>
-		</div>
-		
 		<div ng-view></div>
 	</body>
 </html>
