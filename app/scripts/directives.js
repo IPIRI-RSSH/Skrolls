@@ -11,7 +11,7 @@ angular.module('skrollsDirectives', [])
 .directive('changeName', function() {
 	return {
 		restrict: 'A',
-		template: '<span class="boldtext1">Post as: </span><input class="textfield-name" ng-model="displayname.username" type="text" maxlength="15"></input>'
+		template: '<span class="boldtext1">Post as: </span><input class="textfield-name" ng-model="displayname" type="text" maxlength="15"></input>'
 	};
 })
 .directive('enterSkroll', function() {

@@ -15,9 +15,8 @@ angular.module('skrollsServices', ['ngResource','firebase'])
 			incorrect: false, 
 			user: '',
 		};
-
 		var fireRef= new Firebase('https://skrollsapp.firebaseio.com');
-		var auth =  new FirebaseSimpleLogin(fireRef, function(error, user) {
+		var	auth =  new FirebaseSimpleLogin(fireRef, function(error, user) {
 			if (error) {
 	    		switch(error.code) {
 			    	case 'INVALID_EMAIL':
@@ -40,13 +39,13 @@ angular.module('skrollsServices', ['ngResource','firebase'])
 			   
 		  	} else if (user) {
 		  		UserFact.incorrect=false;
-		  		UserFact.switchloggedin();
+		  		if(typeof UserFact.switchloggedin !== 'undefined') UserFact.switchloggedin();
 		  		UserFact.user=user;
 		    	console.log('LOGGED IN = User ID: ' + user.uid + ', Provider: ' + user.provider);
 		  	} else {
 		  	}
-		  	UserFact.refresh();
-			});
+		  	if(typeof UserFact.switchloggedin !== 'undefined') UserFact.refresh();
+			});		
 		
 		UserFact.log = function(email, pass) {
 			auth.login('password', {
@@ -77,6 +76,9 @@ angular.module('skrollsServices', ['ngResource','firebase'])
 		UserFact.gitlog = function(){
 			auth.login('github');
 		}
+		UserFact.getUser = function(){
+			auth
+		}
 		return UserFact;
 	}])
 	.factory('nameFact', ['$firebase', function($firebase){
@@ -87,15 +89,12 @@ angular.module('skrollsServices', ['ngResource','firebase'])
 			var fireRef= new Firebase('https://skrollsapp.firebaseio.com/users/'+usr);
 			var nameobj=$firebase(fireRef);
 			nameFact.username=nameobj;
-			return nameFact.username;
 		}
-		
 		return nameFact;
 		}])
 	.factory('redirector', ['$location', '$route', function($location, $route, target){
 		var redirector={};
 		redirector.go = function(target){
-			$location.replace();
 			$location.path(target);
 			$route.reload();
 		}

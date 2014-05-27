@@ -1,9 +1,7 @@
 'use strict';
 angular.module('skrollControllers', ['ngAnimate','ngResource','ngRoute'])
 
-.controller('HomeController', ['$scope', '$routeParams', 'UserFact', 'nameFact', '$firebase', function($scope, $routeParams, UserFact, nameFact, $firebase) {
-	var nameget=nameFact.getName($routeParams.userID);
-	var scope = $scope;
+.controller('HomeController', ['$scope', '$routeParams', 'redirector', 'UserFact', 'nameFact', '$firebase', function($scope, $routeParams, redirector, UserFact, nameFact, $firebase) {
 	// check if name already exists
 	$scope.setSkroll = function() {
 	    if($scope.skrollname != "") {
@@ -48,7 +46,6 @@ angular.module('skrollControllers', ['ngAnimate','ngResource','ngRoute'])
 	$scope.loggedin=false;
 	$scope.loginform=false;
 
-	$scope.displayname=nameget;
 	$scope.UserFact=UserFact;
 	$scope.skrollname='';
 	$scope.user=UserFact.user;
@@ -111,19 +108,25 @@ angular.module('skrollControllers', ['ngAnimate','ngResource','ngRoute'])
 		}
 	}
 	$scope.switchLogin = function(){
-		if(scope.loginform == false){
+		if($scope.loginform == false){
 			$scope.loginform=true;
 			document.getElementById("loginname").focus();
 		}
 		else $scope.loginform=false;
 	}
+	$scope.go = function(target){
+		redirector.go(target);
+	}
 	
 }])
-.controller('SkrollListController', ['$scope', '$routeParams', '$firebase', 'SkrollFact', function($scope, $routeParams, $firebase, SkrollFact) {
+.controller('SkrollListController', ['$scope', '$routeParams', '$firebase', 'redirector', 'SkrollFact', function($scope, $routeParams, $firebase, redirector, SkrollFact) {
     $scope.skrolls=$firebase(new Firebase('https://skrollsapp.firebaseio.com/skrolls'));
 	$scope.sortBy = 'name';
+	$scope.go = function(target){
+		redirector.go(target);
+	}
 }])
-.controller('SkrollController', ['$scope', '$routeParams', '$firebase', 'redirector', 'nameFact', function($scope, $routeParams, $firebase, redirector, nameFact) {
+.controller('SkrollController', ['$scope', '$routeParams', '$firebase', 'redirector', 'nameFact', 'UserFact', function($scope, $routeParams, $firebase, redirector, nameFact, UserFact) {
     $scope.skroll=$firebase(new Firebase('https://skrollsapp.firebaseio.com/skrolls/' + $routeParams.skrollID));
    	$scope.imagesRef =$firebase(new Firebase('https://skrollsapp.firebaseio.com'+ '/images'));
 
@@ -133,7 +136,7 @@ angular.module('skrollControllers', ['ngAnimate','ngResource','ngRoute'])
 	$scope.message='';
 	$scope.url=document.URL;
 	$scope.posts=$scope.skroll.$child('posts');
-	$scope.displayname=nameFact.username;
+	//$scope.displayname=nameFact.getName(UserFact.user.id);
 	$scope.post= function(){
 		var count=$scope.skroll.head['postCount'];
 		$scope.posts[count] = {text: $scope.message, image: $scope.imglink, author: $scope.displayname.username, timestamp: Firebase.ServerValue.TIMESTAMP};
@@ -141,8 +144,8 @@ angular.module('skrollControllers', ['ngAnimate','ngResource','ngRoute'])
 		count++;
 		$scope.skroll.$child('head').$update({postCount: count});
 	}
-	$scope.home = function(){
-		console.log("gone home");
+	$scope.go = function(target){
+		redirector.go(target);
 	}
 	$scope.upload_image = function (image) {
 		if(image != null && image.valid){
@@ -164,10 +167,7 @@ angular.module('skrollControllers', ['ngAnimate','ngResource','ngRoute'])
 		}
 	}
 
-}])
-.controller('UserController', ['$scope', '$routeParams', '$firebase', 'UserFact', function($scope, $routeParams, $firebase, UserFact) {
-		$scope.user=$firebase(new Firebase('https://skrollsapp.firebaseio.com/users/' + $routeParams.userID));
+}]);
 
-	}]);
 
 
