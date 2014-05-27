@@ -1,9 +1,7 @@
 'use strict';
 angular.module('skrollControllers', ['ngAnimate','ngResource','ngRoute'])
 
-.controller('HomeController', ['$scope', '$routeParams', 'UserFact', 'nameFact', '$firebase', function($scope, $routeParams, UserFact, nameFact, $firebase) {
-	var nameget=nameFact.getName($routeParams.userID);
-	var scope = $scope;
+.controller('HomeController', ['$scope', '$routeParams', 'redirector', 'UserFact', 'nameFact', '$firebase', function($scope, $routeParams, redirector, UserFact, nameFact, $firebase) {
 	// check if name already exists
 	$scope.setSkroll = function() {
 	    if($scope.skrollname != "") {
@@ -48,15 +46,21 @@ angular.module('skrollControllers', ['ngAnimate','ngResource','ngRoute'])
 	$scope.loggedin=false;
 	$scope.loginform=false;
 
-	$scope.displayname=nameget;
 	$scope.UserFact=UserFact;
 	$scope.skrollname='';
-	$scope.user=$scope.UserFact.user;
-	$scope.email=$scope.UserFact.username;
+	$scope.user=UserFact.user;
+	$scope.email=$scope.user.email;
 	$scope.pass=$scope.UserFact.pass;
 
 	UserFact.refresh = function() {
-		if (!scope.$$phase) scope.$apply();
+		if (!$scope.$$phase) {
+			$scope.$apply(function() {
+				if(typeof UserFact.user.email === 'undefined'){
+					$scope.email=UserFact.user.username;
+				}
+				else $scope.email=UserFact.user.email;
+			});
+		} 
 	};
 	UserFact.switchloggedin = function(){
 		if($scope.loggedout == true){
@@ -69,6 +73,11 @@ angular.module('skrollControllers', ['ngAnimate','ngResource','ngRoute'])
 			$scope.loggedin=false;
 			$scope.loginform=true;
 		}
+	};
+	UserFact.makeName = function(id){
+		var userref=$firebase(new Firebase('https://skrollsapp.firebaseio.com/users/'+id));
+		userref.$set({name: "New user"});
+		console.log(userref);
 	}
 	$scope.log = function() {
 		if (validate()){
@@ -99,20 +108,27 @@ angular.module('skrollControllers', ['ngAnimate','ngResource','ngRoute'])
 		}
 	}
 	$scope.switchLogin = function(){
-		if(scope.loginform == false){
+		if($scope.loginform == false){
 			$scope.loginform=true;
 			document.getElementById("loginname").focus();
 		}
 		else $scope.loginform=false;
 	}
+	$scope.go = function(target){
+		redirector.go(target);
+	}
 	
 }])
-.controller('SkrollListController', ['$scope', '$routeParams', 'UserFact', '$firebase', 'SkrollFact', function($scope, $routeParams, UserFact, $firebase, SkrollFact) {
-    $scope.skrolls = new Firebase('https://skrollsapp.firebaseio.com/skrolls');
+.controller('SkrollListController', ['$scope', '$routeParams',  'UserFact', '$firebase', 'redirector', 'SkrollFact', function($scope, $routeParams, UserFact, $firebase, redirector, SkrollFact) {
+    $scope.skrolls = $firebase(new Firebase('https://skrollsapp.firebaseio.com/skrolls'));
 	$scope.sortBy = 'name';
+	console.log($scope.skrolls);
 	$scope.uid = UserFact.user.id;
+	$scope.go = function(target){
+		redirector.go(target);
+	}
 }])
-.controller('SkrollController', ['$scope', '$routeParams', '$firebase', 'nameFact', function($scope, $routeParams, $firebase, nameFact) {
+.controller('SkrollController', ['$scope', '$routeParams', '$firebase', 'redirector', 'nameFact', 'UserFact', function($scope, $routeParams, $firebase, redirector, nameFact, UserFact) {
     $scope.skroll=$firebase(new Firebase('https://skrollsapp.firebaseio.com/skrolls/' + $routeParams.skrollID));
    	$scope.imagesRef =$firebase(new Firebase('https://skrollsapp.firebaseio.com'+ '/images'));
 
@@ -122,7 +138,7 @@ angular.module('skrollControllers', ['ngAnimate','ngResource','ngRoute'])
 	$scope.message='';
 	$scope.url=document.URL;
 	$scope.posts=$scope.skroll.$child('posts');
-	$scope.displayname=nameFact.username;
+	//$scope.displayname=nameFact.getName(UserFact.user.id);
 	$scope.post= function(){
 		var count=$scope.skroll.head['postCount'];
 		$scope.posts[count] = {text: $scope.message, image: $scope.imglink, author: $scope.displayname.username, timestamp: Firebase.ServerValue.TIMESTAMP};
@@ -130,7 +146,9 @@ angular.module('skrollControllers', ['ngAnimate','ngResource','ngRoute'])
 		count++;
 		$scope.skroll.$child('head').$update({postCount: count});
 	}
-
+	$scope.go = function(target){
+		redirector.go(target);
+	}
 	$scope.upload_image = function (image) {
 		if(image != null && image.valid){
 			var imagesRef, safename, imageUpload;
@@ -151,10 +169,7 @@ angular.module('skrollControllers', ['ngAnimate','ngResource','ngRoute'])
 		}
 	}
 
-}])
-.controller('UserController', ['$scope', '$routeParams', '$firebase', 'UserFact', function($scope, $routeParams, $firebase, UserFact) {
-		$scope.user=$firebase(new Firebase('https://skrollsapp.firebaseio.com/users/' + $routeParams.userID));
+}]);
 
-	}]);
 
 

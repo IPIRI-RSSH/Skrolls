@@ -1,3 +1,6 @@
+var on=false;
+var divel = document.getElementById('clouddiv');
+divel.style.visibility='hidden';
 var skrollsRef = new Firebase('https://skrollsapp.firebaseio.com/skrolls');
 skrollsRef.once('value', function(dataSnapshot) {
 	var eliminate = ["an", "is", "a", "of", "and", "in", "I", "for", "not", "the", "be", "to", "it", "for", "not", "on", "he", "as", "at", "do", "by", "you", "but", "his", "we", "her", "she", "or", "my", "so", "if", "go", "me", "no", "him", "its", "us", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
@@ -54,4 +57,14 @@ var up = function(buf) {
 			})
 			.text(function(d) { return d.text; });
 	  }
+}
+var gocloud = function(){
+	if(on==false){
+		on=true;
+		divel.style.visibility='visible';
+	}
+	else {
+		on=false;
+		divel.style.visibility='hidden';
+	}
 }
