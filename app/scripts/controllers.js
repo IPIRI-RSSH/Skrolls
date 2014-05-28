@@ -58,7 +58,6 @@ angular.module('skrollControllers', ['ngAnimate','ngResource','ngRoute'])
 	$scope.sortBy = 'head.name';
 	$scope.sortType = "true";
 	$scope.uid = UserFact.user.id;
-	console.log($scope.uid);
 }])
 .controller('SkrollController', ['$scope', '$routeParams', '$firebase', '$rootScope', 'redirector', 'nameFact', 'UserFact', function($scope, $routeParams, $firebase, $rootScope, redirector, nameFact, UserFact) {
    	var fireref=new Firebase('https://skrollsapp.firebaseio.com/skrolls/' + $routeParams.skrollID);
@@ -66,7 +65,8 @@ angular.module('skrollControllers', ['ngAnimate','ngResource','ngRoute'])
    	$scope.owner=false;
     $scope.skroll=$firebase(fireref);
    	$scope.skroll.$on('loaded', function(){
-		$scope.displayname=nameFact.getName(UserFact.user.id);
+		$scope.displayname=nameFact.getName(UserFact.user.id);		
+		console.log($scope.displayname.name);
    	});
    	fireref.once('value', function(snap){
    		if(snap.val().head.owner == UserFact.user.id){
@@ -76,12 +76,11 @@ angular.module('skrollControllers', ['ngAnimate','ngResource','ngRoute'])
 	$scope.message='';
 	$scope.url=document.URL;
 	$scope.posts=$scope.skroll.$child('posts');	
-
 	$scope.islocked= false;
 	$scope.isopen=!$scope.islocked;
 	$scope.ispublic=true;
 	$scope.isprivate=!$scope.ispublic;
-
+	$scope.posting=$scope.owner || $scope.isopen;
 	fireref.on('value', function(snapshot) {
 	  	$scope.islocked = snapshot.val().head.permissions == "protected";
 	  	$scope.ispublic = snapshot.val().head.visibility == "public";
@@ -109,8 +108,10 @@ angular.module('skrollControllers', ['ngAnimate','ngResource','ngRoute'])
 	$scope.post= function(){
 		var count=$scope.skroll.head['postCount'];
 		$scope.posts.$add({text: $scope.message, image: $scope.imglink, author: $scope.displayname['name'], timestamp: Firebase.ServerValue.TIMESTAMP});
-		nameFact.setName(UserFact.user.id, $scope.displayname['name']);
-		$scope.displayname=nameFact.getName(UserFact.user.id);
+		if(UserFact.user.id != null){
+			nameFact.setName(UserFact.user.id, $scope.displayname['name']);
+			$scope.displayname=nameFact.getName(UserFact.user.id);
+		}
 		count++;
 		$scope.skroll.$child('head').$update({postCount: count});
 		document.getElementById("uploadform").reset();
