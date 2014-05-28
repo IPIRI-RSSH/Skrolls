@@ -28,11 +28,11 @@ angular.module('skrollControllers', ['ngAnimate','ngResource','ngRoute'])
 			$scope.skrollsRef = $firebase($scope.dataRef);
 			$scope.skrollsRef.$add({name: ""}).then(function(ref) {
 				$scope.skrollURL = ref.name();
-				if(UserFact.user == "") { 
+				if(UserFact.user == null) { 
 					$scope.skrollsRef.$child($scope.skrollURL).$set({head: {name: $scope.skrollname, permissions: "writeable", postCount: 0, visibility: "public", skrollID: $scope.skrollURL}});
 				}
 				else {
-					$scope.skrollsRef.$child($scope.skrollURL).$set({head: {name: $scope.skrollname, owner: $routeParams.userID, permissions: "writeable", postCount: 0, visibility: "public", skrollID: $scope.skrollURL}});
+					$scope.skrollsRef.$child($scope.skrollURL).$set({head: {name: $scope.skrollname, owner: UserFact.user.id, permissions: "writeable", postCount: 0, visibility: "public", skrollID: $scope.skrollURL}});
 				}
 				window.location = "/#/s/" + $scope.skrollURL;
 			});
@@ -119,9 +119,11 @@ angular.module('skrollControllers', ['ngAnimate','ngResource','ngRoute'])
 	}
 	
 }])
-.controller('SkrollListController', ['$scope', '$routeParams', '$firebase', 'redirector', 'SkrollFact', function($scope, $routeParams, $firebase, redirector, SkrollFact) {
-    $scope.skrolls=$firebase(new Firebase('https://skrollsapp.firebaseio.com/skrolls'));
+.controller('SkrollListController', ['$scope', '$routeParams',  'UserFact', '$firebase', 'redirector', 'SkrollFact', function($scope, $routeParams, UserFact, $firebase, redirector, SkrollFact) {
+    $scope.skrolls = $firebase(new Firebase('https://skrollsapp.firebaseio.com/skrolls'));
 	$scope.sortBy = 'name';
+	console.log($scope.skrolls);
+	$scope.uid = UserFact.user.id;
 	$scope.go = function(target){
 		redirector.go(target);
 	}
