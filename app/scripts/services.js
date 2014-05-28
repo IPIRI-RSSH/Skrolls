@@ -124,10 +124,4 @@ angular.module('skrollsServices', ['ngResource','firebase'])
 		}
 		return redirector;
 	}])
-	/*
-
-	 "users":{
-        "$any":{
-         ".read":"auth.id ==$any"
-        }
-        */
+	

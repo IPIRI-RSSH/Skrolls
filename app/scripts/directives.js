@@ -18,7 +18,7 @@ angular.module('skrollsDirectives', [])
 	return {
 		restrict: 'A',
 
-		template: '<h3> Enter Skroll name: </h3><form><input class="textfield" ng-model="skrollname" type="text" placeholder="new Skroll"/><br><button class="button" ng-click="setSkroll()">Open!</button><br><br></form>'
+		template: '<h3> Enter Skroll name: </h3><form><span class="incorrect" ng-show="showErr">{{err}}</span><input class="textfield" ng-model="skrollname" type="text" placeholder="new Skroll"/><br><button class="button" ng-click="setSkroll()">Open!</button><br><br></form>'
 	};
 })
 
@@ -160,7 +160,6 @@ angular.module('skrollsDirectives', [])
 					wasUploading = true;
 				}else if (!isUploading && wasUploading) {
 					wasUploading = false;
-					document.getElementById("uploadform").reset();
 				}
 			});
  
@@ -171,12 +170,12 @@ angular.module('skrollsDirectives', [])
 			};
  
 			var load_image = function(imageInput) {
-				if (imageInput.files.length === 0) { 
+				if (imageInput.files.length === 0) {
 					return;
 				}
 				var file = imageInput.files[0];
 				scope.image.filename = file.name;
-				if (!fileFilter.test(file.type)) { 
+				if (!fileFilter.test(file.type)) {
 					console.log('You must select a valid image!');
 					scope.image.valid = false;
 					scope.$apply();
@@ -189,7 +188,9 @@ angular.module('skrollsDirectives', [])
 			};
  
 			element[0].onchange = function() {
+				scope.image.done=false;
 				load_image(element[0]);
+
 			};
 		},
 		restrict: 'A'

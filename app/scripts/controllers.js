@@ -2,6 +2,8 @@
 angular.module('skrollControllers', ['ngAnimate','ngResource','ngRoute'])
 
 .controller('HomeController', ['$scope', '$routeParams', 'redirector', 'UserFact', 'nameFact', '$firebase', function($scope, $routeParams, redirector, UserFact, nameFact, $firebase) {
+	$scope.showErr=false;
+	$scope.err='';
 	// check if name already exists
 	$scope.setSkroll = function() {
 	    if($scope.skrollname != "") {
@@ -38,8 +40,14 @@ angular.module('skrollControllers', ['ngAnimate','ngResource','ngRoute'])
 			});
 		}
 		else {
-			if(skrollVis === "public") window.location = "/#/s/" + skrollID;
-			else alert("Skroll is private.");
+			if(skrollVis === "public"){
+				$scope.showErr=false;
+				 window.location = "/#/s/" + skrollID;
+			} else{
+				$scope.showErr=true;
+				$scope.err="This Skroll is private!";
+				$scope.$apply();
+			}
 		}
 	}
 }])
@@ -68,10 +76,11 @@ angular.module('skrollControllers', ['ngAnimate','ngResource','ngRoute'])
 		count++;
 		$scope.skroll.$child('head').$update({postCount: count});
 		document.getElementById("uploadform").reset();
+		$scope.imglink=null;
 	}
 	$scope.upload_image = function (image) {
-		if(image != null && image.valid){
-			var imagesRef, safename, imageUpload;
+		if(image != null && image.valid && !image.done){
+			var imagesRef, imageUpload;
 			image.isUploading = true;
 			imageUpload = {
 				isUploading: true,
@@ -83,6 +92,7 @@ angular.module('skrollControllers', ['ngAnimate','ngResource','ngRoute'])
 				$scope.imglink=ref.name();
 				$scope.post();
 				image.isUploading = false;
+				image.done=true;
 				image.data = undefined;
 				image.filename = undefined;
 				image=null;
