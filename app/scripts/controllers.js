@@ -10,20 +10,22 @@ angular.module('skrollControllers', ['ngAnimate','ngResource','ngRoute'])
 				var nameExist = false;
 				var skrollID;
 				var skrollVis;
+				var ownerID
 				dataSnapshot.forEach(function(skrolls) {
 					var skroll = skrolls.child('head').val();
 					if (skroll['name'] === $scope.skrollname) {
 						nameExist = true;
 						skrollID = skroll['skrollID'];
 						skrollVis = skroll['visibility'];
+						ownerID = skroll['owner'];
 					}
 				});
-				update(nameExist, skrollID, skrollVis);
+				update(nameExist, skrollID, skrollVis, ownerID);
 			});
 		}
 	}
 	// create new skroll and push to base
-	var update = function(nameExist, skrollID, skrollVis) {
+	var update = function(nameExist, skrollID, skrollVis, ownerID) {
 		if(!nameExist) {
 			$scope.skrollsRef = $firebase($scope.dataRef);
 			$scope.skrollsRef.$add({name: ""}).then(function(ref) {
@@ -38,15 +40,17 @@ angular.module('skrollControllers', ['ngAnimate','ngResource','ngRoute'])
 			});
 		}
 		else {
-			if(skrollVis === "public") window.location = "/#/s/" + skrollID;
+			if(skrollVis === "public" || ownerID === UserFact.user.id) window.location = "/#/s/" + skrollID;
 			else alert("Skroll is private.");
 		}
 	}
 }])
 .controller('SkrollListController', ['$scope', '$routeParams',  'UserFact', '$firebase', 'redirector', 'SkrollFact', function($scope, $routeParams, UserFact, $firebase, redirector, SkrollFact) {
     $scope.skrolls = $firebase(new Firebase('https://skrollsapp.firebaseio.com/skrolls'));
-	$scope.sortBy = 'name';
+	$scope.sortBy = 'head.name';
+	$scope.sortType = "true";
 	$scope.uid = UserFact.user.id;
+	console.log($scope.uid);
 }])
 .controller('SkrollController', ['$scope', '$routeParams', '$firebase', 'redirector', 'nameFact', 'UserFact', function($scope, $routeParams, $firebase, redirector, nameFact, UserFact) {
     $scope.skroll=$firebase(new Firebase('https://skrollsapp.firebaseio.com/skrolls/' + $routeParams.skrollID));
