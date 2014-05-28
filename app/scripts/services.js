@@ -9,14 +9,14 @@ angular.module('skrollsServices', ['ngResource','firebase'])
 	.factory('SkrollFact', ['$resource', function($resource){
 		return $resource('https://skrollsapp.firebaseio.com/skrolls/:skrollid');
 	}])
-	.factory('UserFact', ['$resource', function($resource){
+	.factory('UserFact', ['$rootScope', '$resource', function($rootScope, $resource){
 		var UserFact={
 			errMsg: "", 
 			incorrect: false, 
-			user: '',
+			user: ''
 		};
 		var fireRef= new Firebase('https://skrollsapp.firebaseio.com');
-		var	auth =  new FirebaseSimpleLogin(fireRef, function(error, user) {
+		var auth =  new FirebaseSimpleLogin(fireRef, function(error, user) {
 			if (error) {
 	    		switch(error.code) {
 			    	case 'INVALID_EMAIL':
@@ -32,21 +32,22 @@ angular.module('skrollsServices', ['ngResource','firebase'])
 			      		UserFact.errMsg="Email taken!";
 			      		break;
 			      	default:
-			      	console.log(error);
-			    }
+			      		UserFact.errMsg="Unknown error";
+			   	}
 			   UserFact.incorrect=true;
 			   console.log(error);
+			   UserFact.refreshErr();
 			   
 		  	} else if (user) {
 		  		UserFact.incorrect=false;
-		  		if(typeof UserFact.switchloggedin !== 'undefined') UserFact.switchloggedin();
+		  		UserFact.switchloggedin();
 		  		UserFact.user=user;
+		  		$rootScope.user=user;
 		    	console.log('LOGGED IN = User ID: ' + user.uid + ', Provider: ' + user.provider);
-		  	} else {
+		    	UserFact.refresh();
 		  	}
-		  	if(typeof UserFact.switchloggedin !== 'undefined') UserFact.refresh();
 			});		
-		
+
 		UserFact.log = function(email, pass) {
 			auth.login('password', {
 				email: email,
@@ -55,17 +56,33 @@ angular.module('skrollsServices', ['ngResource','firebase'])
 		};
 		UserFact.reg = function(email, pass) {
 			auth.createUser(email, pass, function(error, user) {
-	  		if (!error) {
+	  		if(error) {
+	    		switch(error.code) {
+			    	case 'INVALID_EMAIL':
+			    		UserFact.errMsg="Not a valid email address!";
+			    		break;
+			      	case 'INVALID_PASSWORD':
+			      		UserFact.errMsg="Wrong password!";
+			      		break;
+			      	case 'INVALID_USER':
+			      		UserFact.errMsg="User doesn't exist!";
+			      		break;
+			      	case 'EMAIL_TAKEN':
+			      		UserFact.errMsg="Email taken!";
+			      		break;
+			      	default:
+			      		UserFact.errMsg="Unknown error";
+			   	}
+			   UserFact.incorrect=true;
+			   console.log(error);
+			   UserFact.refreshErr();
+			
+		  	} else {
 	    		UserFact.makeName(user.id);
 	    		UserFact.log(email, pass);
-	    		doLogin(user);
-	  			}
-	  			else console.log(error);
+	  		}
 			});
 		};
-		function doLogin(user){
-			UserFact.refresh();
-		}
 		UserFact.logout = function(){
 	   		auth.logout();
 	   		UserFact.switchloggedin();
@@ -77,18 +94,25 @@ angular.module('skrollsServices', ['ngResource','firebase'])
 			auth.login('github');
 		}
 		UserFact.getUser = function(){
-			auth
+			return UserFact.user;
 		}
 		return UserFact;
 	}])
 	.factory('nameFact', ['$firebase', function($firebase){
 		var nameFact={
-			username: ''
+			name: ''
 		};
 		nameFact.getName = function(usr){
 			var fireRef= new Firebase('https://skrollsapp.firebaseio.com/users/'+usr);
 			var nameobj=$firebase(fireRef);
-			nameFact.username=nameobj;
+			nameFact.name=nameobj;
+			return nameFact.name;
+		}
+		nameFact.setName = function(usr, newname){
+			var fireRef= new Firebase('https://skrollsapp.firebaseio.com/users/'+usr);
+			var nameobj=$firebase(fireRef);
+			nameobj.$set({"name": newname});
+			nameobj.$save;
 		}
 		return nameFact;
 		}])
@@ -100,4 +124,10 @@ angular.module('skrollsServices', ['ngResource','firebase'])
 		}
 		return redirector;
 	}])
-	
+	/*
+
+	 "users":{
+        "$any":{
+         ".read":"auth.id ==$any"
+        }
+        */

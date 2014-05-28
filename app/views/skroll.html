@@ -1,4 +1,3 @@
-
 <div class="centre">
 	<div>
 		<ul class="container-wide">
@@ -15,15 +14,17 @@
 				</div>
 			</li>
 			<div class="g-plus" data-action="share" data-height="15" data-href="{{url}}"></div>
+
 		</ul>
 		<div ng-show="posting"><br>
 			<ul class="container-wide">
-				<form ng-submit="upload_image(image)">
-					<div change-name></div>
+				<span class="boldtext1">Post as: </span>
+				<input class="textfield-name" ng-model="displayname.name" type="text" maxlength="15"></input>
+				<form ng-submit="upload_image(image)" id="uploadform">
 					<textarea ng-model="message" ngMaxlength=1500 placeholder="Enter your message..." ></textarea><br>
 					<div class="upload-div"> 
 						<button class="button" ng-model="upload" >
-							<input type="file" image-upload name="image"></input>
+							<input type="file" image-upload name="image" id="fileup"></input>
 							Upload...
 						</button>	
 					</div>	
@@ -33,6 +34,8 @@
 		</div>
 	</div>
 </div>
+<div signinbutton-directive></div>
 <div dockdir></div>
+
 
 

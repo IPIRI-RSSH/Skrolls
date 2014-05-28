@@ -4,21 +4,21 @@
 			<span class="docklabel">Sign in</span>
 		</div>
 		<div ng-show="loggedin">
-			<h4 class="userstatustext">{{email}}</h4>
+			<h4 class="userstatustext">{{user.email}}</h4>
 			<div class="cplist">
 				<a class="cplist-item" onclick="gocloud()"><i class="fa fa-magic fa-fw"></i>&nbsp; Wordcloud</a>
-				<a class="cplist-item" href="/#/myskrolls"><i class="fa fa-user fa-fw"></i>&nbsp; My Skrolls</a>
+				<a class="cplist-item" ng-click="gomyskrolls()"><i class="fa fa-user fa-fw"></i>&nbsp; My Skrolls</a>
 				<!--<a class="cplist-item"><i class="fa fa-cog fa-fw"></i>&nbsp; Settings</a>-->
 				<a class="cplist-item" ng-click="logout()"><i class="fa fa-sign-out fa-fw"></i>&nbsp; Log out</a>
-			</div>
-			
+			</div>	
 		</div>
+	</div>
 </div>
 
 <div ng-show="loginform">
 	<div class="fade" ng-click="switchLogin()"></div>
 	<br><br>
-	<div class="container ontop">
+	<div class="container ontop" id="logincont">
 		<h3> Sign in: </h3>
 		<span class="incorrect" ng-show="UserFact.incorrect">{{UserFact.errMsg}}</span>
 		<input class="textfield" ng-model="email" type="text" placeholder="Email" autofocus/>

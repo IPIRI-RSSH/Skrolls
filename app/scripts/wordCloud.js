@@ -28,28 +28,28 @@ var up = function(buf) {
 		str = str.replace(re, '');
 		temp = str.split(" ").filter(Boolean);
 	}
-	var fill = d3.scale.category20();
+	var fill = d3.scale.category10();
 
-	  d3.layout.cloud().size([300, 300])
+	  d3.layout.cloud().size([1800, 900])
 		  .words(skrollsWords)
-		  .padding(5)
+		  .padding(2)
 		  .rotate(function() { return ~~(Math.random() * 2) * 90; })
-		  .font("Impact")
-		  .fontSize(function(d) { return d.size * 5; })
+		  .font("Arial")
+		  .fontSize(function(d) { return d.size * 15; })
 		  .on("end", draw)
 		  .start();
 
 	  function draw(words) {
 		d3.select("div").append("svg")
-			.attr("width", 300)
-			.attr("height", 300)
+			.attr("width", 1800)
+			.attr("height", 900)
 		  .append("g")
-			.attr("transform", "translate(150,150)")
+			.attr("transform", "translate(900,400)")
 		  .selectAll("text")
 			.data(words)
 		  .enter().append("text")
 			.style("font-size", function(d) { return d.size + "px"; })
-			.style("font-family", "Impact")
+			.style("font-family", "Arial")
 			.style("fill", function(d, i) { return fill(i); })
 			.attr("text-anchor", "middle")
 			.attr("transform", function(d) {

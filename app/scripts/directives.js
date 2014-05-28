@@ -18,7 +18,7 @@ angular.module('skrollsDirectives', [])
 	return {
 		restrict: 'A',
 
-		template: '<h3> Enter Skroll name: </h3><form><input class="textfield" ng-model="skrollname" type="text" placeholder="new Skroll"/><br><p class="button" ng-click="setSkroll()"  >Open</p><br><br></form>'
+		template: '<h3> Enter Skroll name: </h3><form><input class="textfield" ng-model="skrollname" type="text" placeholder="new Skroll"/><br><button class="button" ng-click="setSkroll()">Open!</button><br><br></form>'
 	};
 })
 
@@ -44,19 +44,106 @@ angular.module('skrollsDirectives', [])
 	};
 }])
 
-.directive('signinbuttonDirective', function() {
+.directive('signinbuttonDirective', ['$rootScope','$location', 'UserFact', '$firebase', function($rootScope, $location, UserFact, $firebase) {
 	return {
+		controller: function($scope, $element, $attrs, UserFact){
+			$scope.loggedin=$rootScope.user;
+			$scope.loggedout=!$scope.loggedin;
+			$scope.loginform=false;
+			$scope.UserFact=UserFact;
+			$scope.skrollname='';
+			$scope.user=$rootScope.user;
+			$scope.email;
+			$scope.pass;
+
+			UserFact.refresh = function() {
+				if (!$scope.$$phase) {
+					console.log('applying');
+					$scope.$apply(function() {
+						$scope.user=$rootScope.user;
+						if(typeof $rootScope.user.email === 'undefined'){
+							$scope.email=$scope.user.username;
+						}
+						else $scope.email=$scope.user.email;
+					});
+				} 
+				else console.log('not applying');
+			};
+			UserFact.refreshErr = function(){
+				console.log("a");
+				if (!$scope.$$phase) $scope.$apply();
+			}
+			UserFact.switchloggedin = function(){
+				if($scope.loggedout == true){
+					$scope.loggedout=false;
+					$scope.loggedin=true;
+					$scope.loginform=false;
+				}
+				else{
+					$scope.loggedout=true;
+					$scope.loggedin=false;
+					$scope.loginform=true;
+				}
+			};
+			UserFact.makeName = function(id){
+				var userref=$firebase(new Firebase('https://skrollsapp.firebaseio.com/users/'+id));
+				userref.$set({name: "New user"});
+			}
+			$scope.log = function() {
+				if (validate()){
+					UserFact.log($scope.email, $scope.pass);
+				}
+			};
+			$scope.reg = function() {
+				if (validate()){
+					UserFact.reg($scope.email, $scope.pass);
+				}
+			};
+			$scope.googlelog = function(){
+				UserFact.googlelog();
+			}
+			$scope.gitlog = function(){
+				UserFact.gitlog();
+			}
+			$scope.logout = function(){
+		   			UserFact.logout();
+		   	}
+			function validate(){
+				if($scope.email!= null && $scope.pass != null && $scope.pass.length >= 6){
+					return true;
+				}
+				else{
+					$scope.UserFact.errMsg="Input email and password!";
+		 			$scope.UserFact.incorrect=true;
+				}
+			}
+			$scope.switchLogin = function(){
+				if($scope.loginform == false){
+					$scope.loginform=true;
+					document.getElementById("loginname").focus();
+				}
+				else $scope.loginform=false;
+			}
+			$scope.gomyskrolls = function(){
+				$location.path('myskrolls');
+			}
+		},
 		restrict: 'A',
 		templateUrl:'/views/userstatus.html'
 	};
-})
+}])
 
-.directive('dockdir', function() {
+.directive('dockdir', ['$location', '$route', 'UserFact', function($location, $route, UserFact) {
 	return {
+		controller: function($scope, $element, $attrs){
+			$scope.go = function(target){
+				$location.path(target);
+			};
+		},
 		restrict: 'A',
 		templateUrl:'/views/dock.html'
 	};
-})
+}])
 
 .directive('imageUpload', [function() {
 	return {
@@ -65,7 +152,6 @@ angular.module('skrollsDirectives', [])
 			var fileReader = new FileReader();
 			var fileFilter = /^(?:image\/bmp|image\/cis\-cod|image\/gif|image\/ief|image\/jpeg|image\/jpeg|image\/jpeg|image\/pipeg|image\/png|image\/svg\+xml|image\/tiff|image\/x\-cmu\-raster|image\/x\-cmx|image\/x\-icon|image\/x\-portable\-anymap|image\/x\-portable\-bitmap|image\/x\-portable\-graymap|image\/x\-portable\-pixmap|image\/x\-rgb|image\/x\-xbitmap|image\/x\-xpixmap|image\/x\-xwindowdump)$/i;
 			var wasUploading = false;
- 
 			scope.image = {valid: false};
  
 			scope.$watch('image.isUploading', function () {
@@ -74,7 +160,7 @@ angular.module('skrollsDirectives', [])
 					wasUploading = true;
 				}else if (!isUploading && wasUploading) {
 					wasUploading = false;
-					element.parent().parent()[0].reset();
+					document.getElementById("uploadform").reset();
 				}
 			});
  
