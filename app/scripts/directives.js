@@ -58,21 +58,19 @@ angular.module('skrollsDirectives', [])
 
 			UserFact.refresh = function() {
 				if (!$scope.$$phase) {
-					console.log('applying');
 					$scope.$apply(function() {
 						$scope.user=$rootScope.user;
-						if(typeof $rootScope.user.email === 'undefined'){
-							$scope.email=$scope.user.username;
+						if ($rootScope.user != null ){
+							if(typeof $rootScope.user.email === 'undefined'){
+								$scope.email=$scope.user.username;
+							} else $scope.email=$scope.user.email;
 						}
-						else $scope.email=$scope.user.email;
 					});
-				} 
-				else console.log('not applying');
+				}
 			};
 			UserFact.refreshErr = function(){
-				console.log("a");
 				if (!$scope.$$phase) $scope.$apply();
-			}
+			};
 			UserFact.switchloggedin = function(){
 				if($scope.loggedout == true){
 					$scope.loggedout=false;
@@ -106,7 +104,8 @@ angular.module('skrollsDirectives', [])
 				UserFact.gitlog();
 			}
 			$scope.logout = function(){
-		   			UserFact.logout();
+		   		UserFact.logout();
+		   		$location.path('');
 		   	}
 			function validate(){
 				if($scope.email!= null && $scope.pass != null && $scope.pass.length >= 6){

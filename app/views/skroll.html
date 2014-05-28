@@ -1,6 +1,12 @@
 <div class="centre">
 	<div>
 		<ul class="container-wide">
+			<div class="dock skroll-pref"> 
+				<i ng-show="isprivate" class="fa fa-ban fa-fw" title="PRIVATE - only you can see" ng-click="switchvisibility()"></i>
+				<i ng-show="ispublic" class="fa fa-globe fa-fw" title="PUBLIC - everyone can see" ng-click="switchvisibility()"></i>
+				<i ng-show="islocked" class="fa fa-lock fa-fw" title="LOCKED - no posting" ng-click="switchpermissions()"></i>
+				<i ng-show="isopen" class="fa fa-unlock fa-fw" title="OPEN - posting enabled" ng-click="switchpermissions()"></i>
+			</div>
 			<span class="title">{{skroll.head.name}}</span>
 			<span class="subtext">{{skroll.head.visibility}} | {{skroll.head.permissions}}</span><br><br>
 			<li class="animate-list" ng-repeat = "post in posts" >
@@ -16,7 +22,7 @@
 			<div class="g-plus" data-action="share" data-height="15" data-href="{{url}}"></div>
 
 		</ul>
-		<div ng-show="posting"><br>
+		<div ng-show="isopen"><br>
 			<ul class="container-wide">
 				<span class="boldtext1">Post as: </span>
 				<input class="textfield-name" ng-model="displayname.name" type="text" maxlength="15"></input>

@@ -56,21 +56,55 @@ angular.module('skrollControllers', ['ngAnimate','ngResource','ngRoute'])
 	$scope.sortBy = 'name';
 	$scope.uid = UserFact.user.id;
 }])
-.controller('SkrollController', ['$scope', '$routeParams', '$firebase', 'redirector', 'nameFact', 'UserFact', function($scope, $routeParams, $firebase, redirector, nameFact, UserFact) {
-    $scope.skroll=$firebase(new Firebase('https://skrollsapp.firebaseio.com/skrolls/' + $routeParams.skrollID));
+.controller('SkrollController', ['$scope', '$routeParams', '$firebase', '$rootScope', 'redirector', 'nameFact', 'UserFact', function($scope, $routeParams, $firebase, $rootScope, redirector, nameFact, UserFact) {
+   	var fireref=new Firebase('https://skrollsapp.firebaseio.com/skrolls/' + $routeParams.skrollID);
    	
+   	$scope.owner=false;
+    $scope.skroll=$firebase(fireref);
    	$scope.skroll.$on('loaded', function(){
 		$scope.displayname=nameFact.getName(UserFact.user.id);
-		$scope.posting=true;
+   	});
+   	fireref.once('value', function(snap){
+   		if(snap.val().head.owner == UserFact.user.id){
+   			$scope.owner=true;
+   		}
    	});
 	$scope.message='';
 	$scope.url=document.URL;
 	$scope.posts=$scope.skroll.$child('posts');	
 
+	$scope.islocked= false;
+	$scope.isopen=!$scope.islocked;
+	$scope.ispublic=true;
+	$scope.isprivate=!$scope.ispublic;
+
+	fireref.on('value', function(snapshot) {
+	  	$scope.islocked = snapshot.val().head.permissions == "protected";
+	  	$scope.ispublic = snapshot.val().head.visibility == "public";
+	  	$scope.isopen = !$scope.islocked;
+		$scope.isprivate = !$scope.ispublic;
+	});
+	$scope.switchpermissions = function(){
+		if(!$scope.owner) return;
+		if($scope.islocked){
+			$scope.skroll.$child('head').$update({permissions: "writeable"});
+		}
+		else{
+			$scope.skroll.$child('head').$update({permissions: "protected"});
+		}
+	}
+	$scope.switchvisibility = function(){
+		if(!$scope.owner) return;
+		if($scope.isprivate){
+			$scope.skroll.$child('head').$update({visibility: "public"});
+		}
+		else{
+			$scope.skroll.$child('head').$update({visibility: "private"});
+		}
+	}
 	$scope.post= function(){
 		var count=$scope.skroll.head['postCount'];
-		$scope.posts[count] = {text: $scope.message, image: $scope.imglink, author: $scope.displayname['name'], timestamp: Firebase.ServerValue.TIMESTAMP};
-		$scope.posts.$save(count);
+		$scope.posts.$add({text: $scope.message, image: $scope.imglink, author: $scope.displayname['name'], timestamp: Firebase.ServerValue.TIMESTAMP});
 		nameFact.setName(UserFact.user.id, $scope.displayname['name']);
 		$scope.displayname=nameFact.getName(UserFact.user.id);
 		count++;
@@ -102,5 +136,4 @@ angular.module('skrollControllers', ['ngAnimate','ngResource','ngRoute'])
 			$scope.post();
 		}
 	}
-
 }]);
