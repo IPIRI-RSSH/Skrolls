@@ -29,22 +29,24 @@ var up = function(buf) {
 		temp = str.split(" ").filter(Boolean);
 	}
 	var fill = d3.scale.category10();
-
-	  d3.layout.cloud().size([1800, 900])
+	  var width = window.innerWidth;
+	  var height = window.innerHeight;
+	  console.log("width: %s, height: %s", width, height);
+	  d3.layout.cloud().size([width, height])
 		  .words(skrollsWords)
 		  .padding(2)
 		  .rotate(function() { return ~~(Math.random() * 2) * 90; })
 		  .font("Arial")
-		  .fontSize(function(d) { return d.size * 15; })
+		  .fontSize(function(d) { return d.size * 5; })
 		  .on("end", draw)
 		  .start();
 
 	  function draw(words) {
 		d3.select("div").append("svg")
-			.attr("width", 1800)
-			.attr("height", 900)
+			.attr("width", width)
+			.attr("height", height)
 		  .append("g")
-			.attr("transform", "translate(900,400)")
+			.attr("transform", "translate(800,300)")
 		  .selectAll("text")
 			.data(words)
 		  .enter().append("text")
