@@ -3,12 +3,16 @@
 		Search: <input class="textfield" type="text" ng-model="filterBy"><br>
 		Sort by: 
 		<select ng-model="sortBy">
-			<option value="name">Alphabetical</option>
-			<option value="skrollID">Date</option>
-			<option value="postCount">Posts</option>
+			<option value="head.name">Alphabetical</option>
+			<option value="head.skrollID">Date</option>
+			<option value="head.postCount">Posts</option>
+		</select>
+		<select ng-model="sortType">
+			<option value="false">&#8593</option>
+			<option value="true">&#8595</option>
 		</select><br><br><hr>
-		<li class="animate-fixed" ng-repeat="skroll in skrolls | orderByPriority | filter:filterBy | orderBy:sortBy">
-			<div ng-show="skroll.head.visibility === 'public'" skroll-button </div>
+		<li class="animate-fixed" ng-repeat="skroll in skrolls | orderByPriority | filter:filterBy | orderBy:sortBy:sortType">
+			<div ng-show="skroll.head.visibility === 'public' || skroll.head.owner === uid" skroll-button </div>
 		</li>
 </div>
 <div signinbutton-directive></div>
