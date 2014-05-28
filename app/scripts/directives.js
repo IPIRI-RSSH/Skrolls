@@ -18,7 +18,7 @@ angular.module('skrollsDirectives', [])
 	return {
 		restrict: 'A',
 
-		template: '<h3> Enter Skroll name: </h3><form><input class="textfield" ng-model="skrollname" type="text" placeholder="new Skroll"/><br><button class="button" ng-click="setSkroll()">Open!</button><br><br></form>'
+		template: '<h3> Enter Skroll name: </h3><form><span class="incorrect" ng-show="showErr">{{err}}</span><input class="textfield" ng-model="skrollname" type="text" placeholder="new Skroll"/><br><button class="button" ng-click="setSkroll()">Open!</button><br><br></form>'
 	};
 })
 
@@ -58,21 +58,19 @@ angular.module('skrollsDirectives', [])
 
 			UserFact.refresh = function() {
 				if (!$scope.$$phase) {
-					console.log('applying');
 					$scope.$apply(function() {
 						$scope.user=$rootScope.user;
-						if(typeof $rootScope.user.email === 'undefined'){
-							$scope.email=$scope.user.username;
+						if ($rootScope.user != null ){
+							if(typeof $rootScope.user.email === 'undefined'){
+								$scope.email=$scope.user.username;
+							} else $scope.email=$scope.user.email;
 						}
-						else $scope.email=$scope.user.email;
 					});
-				} 
-				else console.log('not applying');
+				}
 			};
 			UserFact.refreshErr = function(){
-				console.log("a");
 				if (!$scope.$$phase) $scope.$apply();
-			}
+			};
 			UserFact.switchloggedin = function(){
 				if($scope.loggedout == true){
 					$scope.loggedout=false;
@@ -106,7 +104,8 @@ angular.module('skrollsDirectives', [])
 				UserFact.gitlog();
 			}
 			$scope.logout = function(){
-		   			UserFact.logout();
+		   		UserFact.logout();
+		   		$location.path('');
 		   	}
 			function validate(){
 				if($scope.email!= null && $scope.pass != null && $scope.pass.length >= 6){
@@ -160,7 +159,6 @@ angular.module('skrollsDirectives', [])
 					wasUploading = true;
 				}else if (!isUploading && wasUploading) {
 					wasUploading = false;
-					document.getElementById("uploadform").reset();
 				}
 			});
  
@@ -171,12 +169,12 @@ angular.module('skrollsDirectives', [])
 			};
  
 			var load_image = function(imageInput) {
-				if (imageInput.files.length === 0) { 
+				if (imageInput.files.length === 0) {
 					return;
 				}
 				var file = imageInput.files[0];
 				scope.image.filename = file.name;
-				if (!fileFilter.test(file.type)) { 
+				if (!fileFilter.test(file.type)) {
 					console.log('You must select a valid image!');
 					scope.image.valid = false;
 					scope.$apply();
@@ -189,7 +187,9 @@ angular.module('skrollsDirectives', [])
 			};
  
 			element[0].onchange = function() {
+				scope.image.done=false;
 				load_image(element[0]);
+
 			};
 		},
 		restrict: 'A'

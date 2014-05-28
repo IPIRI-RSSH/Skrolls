@@ -129,6 +129,12 @@ hr{
   	top: 50%;
  	-webkit-transform: translateY(-50%);
 }
+
+.skroll-pref{
+	text-align: left;
+	padding-left: 10px;
+}
+
 .dock *,
 #button-sign{
 	color: #888888;

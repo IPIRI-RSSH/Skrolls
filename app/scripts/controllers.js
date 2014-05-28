@@ -2,6 +2,8 @@
 angular.module('skrollControllers', ['ngAnimate','ngResource','ngRoute'])
 
 .controller('HomeController', ['$scope', '$routeParams', 'redirector', 'UserFact', 'nameFact', '$firebase', function($scope, $routeParams, redirector, UserFact, nameFact, $firebase) {
+	$scope.showErr=false;
+	$scope.err='';
 	// check if name already exists
 	$scope.setSkroll = function() {
 	    if($scope.skrollname != "") {
@@ -40,8 +42,14 @@ angular.module('skrollControllers', ['ngAnimate','ngResource','ngRoute'])
 			});
 		}
 		else {
-			if(skrollVis === "public" || ownerID === UserFact.user.id) window.location = "/#/s/" + skrollID;
-			else alert("Skroll is private.");
+			if(skrollVis === "public" || ownerID === UserFact.user.id){
+				$scope.showErr=false;
+				 window.location = "/#/s/" + skrollID;
+			} else{
+				$scope.showErr=true;
+				$scope.err="This Skroll is private!";
+				$scope.$apply();
+			}
 		}
 	}
 }])
@@ -52,30 +60,65 @@ angular.module('skrollControllers', ['ngAnimate','ngResource','ngRoute'])
 	$scope.uid = UserFact.user.id;
 	console.log($scope.uid);
 }])
-.controller('SkrollController', ['$scope', '$routeParams', '$firebase', 'redirector', 'nameFact', 'UserFact', function($scope, $routeParams, $firebase, redirector, nameFact, UserFact) {
-    $scope.skroll=$firebase(new Firebase('https://skrollsapp.firebaseio.com/skrolls/' + $routeParams.skrollID));
+.controller('SkrollController', ['$scope', '$routeParams', '$firebase', '$rootScope', 'redirector', 'nameFact', 'UserFact', function($scope, $routeParams, $firebase, $rootScope, redirector, nameFact, UserFact) {
+   	var fireref=new Firebase('https://skrollsapp.firebaseio.com/skrolls/' + $routeParams.skrollID);
    	
+   	$scope.owner=false;
+    $scope.skroll=$firebase(fireref);
    	$scope.skroll.$on('loaded', function(){
 		$scope.displayname=nameFact.getName(UserFact.user.id);
-		$scope.posting=true;
+   	});
+   	fireref.once('value', function(snap){
+   		if(snap.val().head.owner == UserFact.user.id){
+   			$scope.owner=true;
+   		}
    	});
 	$scope.message='';
 	$scope.url=document.URL;
 	$scope.posts=$scope.skroll.$child('posts');	
 
+	$scope.islocked= false;
+	$scope.isopen=!$scope.islocked;
+	$scope.ispublic=true;
+	$scope.isprivate=!$scope.ispublic;
+
+	fireref.on('value', function(snapshot) {
+	  	$scope.islocked = snapshot.val().head.permissions == "protected";
+	  	$scope.ispublic = snapshot.val().head.visibility == "public";
+	  	$scope.isopen = !$scope.islocked;
+		$scope.isprivate = !$scope.ispublic;
+	});
+	$scope.switchpermissions = function(){
+		if(!$scope.owner) return;
+		if($scope.islocked){
+			$scope.skroll.$child('head').$update({permissions: "writeable"});
+		}
+		else{
+			$scope.skroll.$child('head').$update({permissions: "protected"});
+		}
+	}
+	$scope.switchvisibility = function(){
+		if(!$scope.owner) return;
+		if($scope.isprivate){
+			$scope.skroll.$child('head').$update({visibility: "public"});
+		}
+		else{
+			$scope.skroll.$child('head').$update({visibility: "private"});
+		}
+	}
 	$scope.post= function(){
 		var count=$scope.skroll.head['postCount'];
-		$scope.posts[count] = {text: $scope.message, image: $scope.imglink, author: $scope.displayname['name'], timestamp: Firebase.ServerValue.TIMESTAMP};
-		$scope.posts.$save(count);
+		$scope.posts.$add({text: $scope.message, image: $scope.imglink, author: $scope.displayname['name'], timestamp: Firebase.ServerValue.TIMESTAMP});
 		nameFact.setName(UserFact.user.id, $scope.displayname['name']);
 		$scope.displayname=nameFact.getName(UserFact.user.id);
 		count++;
 		$scope.skroll.$child('head').$update({postCount: count});
 		document.getElementById("uploadform").reset();
+		$scope.imglink=null;
 	}
 	$scope.upload_image = function (image) {
-		if(image != null && image.valid){
-			var imagesRef, safename, imageUpload;
+		if(image != null && image.valid && !image.done){
+			var imagesRef, imageUpload;
 			image.isUploading = true;
 			imageUpload = {
 				isUploading: true,
@@ -87,6 +130,7 @@ angular.module('skrollControllers', ['ngAnimate','ngResource','ngRoute'])
 				$scope.imglink=ref.name();
 				$scope.post();
 				image.isUploading = false;
+				image.done=true;
 				image.data = undefined;
 				image.filename = undefined;
 				image=null;
@@ -96,5 +140,4 @@ angular.module('skrollControllers', ['ngAnimate','ngResource','ngRoute'])
 			$scope.post();
 		}
 	}
-
 }]);
