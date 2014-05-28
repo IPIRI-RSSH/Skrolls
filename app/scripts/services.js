@@ -15,9 +15,8 @@ angular.module('skrollsServices', ['ngResource','firebase'])
 			incorrect: false, 
 			user: '',
 		};
-
 		var fireRef= new Firebase('https://skrollsapp.firebaseio.com');
-		var auth =  new FirebaseSimpleLogin(fireRef, function(error, user) {
+		var	auth =  new FirebaseSimpleLogin(fireRef, function(error, user) {
 			if (error) {
 	    		switch(error.code) {
 			    	case 'INVALID_EMAIL':
@@ -40,14 +39,13 @@ angular.module('skrollsServices', ['ngResource','firebase'])
 			   
 		  	} else if (user) {
 		  		UserFact.incorrect=false;
-		  		UserFact.switchloggedin();
-		  		//doLogin(user);
+		  		if(typeof UserFact.switchloggedin !== 'undefined') UserFact.switchloggedin();
 		  		UserFact.user=user;
 		    	console.log('LOGGED IN = User ID: ' + user.uid + ', Provider: ' + user.provider);
 		  	} else {
 		  	}
-		  	UserFact.refresh();
-			});
+		  	if(typeof UserFact.switchloggedin !== 'undefined') UserFact.refresh();
+			});		
 		
 		UserFact.log = function(email, pass) {
 			auth.login('password', {
@@ -58,9 +56,11 @@ angular.module('skrollsServices', ['ngResource','firebase'])
 		UserFact.reg = function(email, pass) {
 			auth.createUser(email, pass, function(error, user) {
 	  		if (!error) {
-	    		console.log('REGISTERED User Id: ' + user.uid + ', Email: ' + user.email);
+	    		UserFact.makeName(user.id);
+	    		UserFact.log(email, pass);
 	    		doLogin(user);
 	  			}
+	  			else console.log(error);
 			});
 		};
 		function doLogin(user){
@@ -72,11 +72,12 @@ angular.module('skrollsServices', ['ngResource','firebase'])
 	   	}
 		UserFact.googlelog = function(){
 			auth.login('google');
-			UserFact.switchloggedin();
 		}
 		UserFact.gitlog = function(){
 			auth.login('github');
-			UserFact.switchloggedin();
+		}
+		UserFact.getUser = function(){
+			auth
 		}
 		return UserFact;
 	}])
@@ -88,9 +89,15 @@ angular.module('skrollsServices', ['ngResource','firebase'])
 			var fireRef= new Firebase('https://skrollsapp.firebaseio.com/users/'+usr);
 			var nameobj=$firebase(fireRef);
 			nameFact.username=nameobj;
-			return nameFact.username;
 		}
-		
 		return nameFact;
 		}])
+	.factory('redirector', ['$location', '$route', function($location, $route, target){
+		var redirector={};
+		redirector.go = function(target){
+			$location.path(target);
+			$route.reload();
+		}
+		return redirector;
+	}])
 	

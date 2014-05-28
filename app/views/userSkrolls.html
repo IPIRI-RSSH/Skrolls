@@ -8,8 +8,6 @@
 			<option value="postCount">Posts</option>
 		</select><br><br><hr>
 		<li class="animate-fixed" ng-repeat="skroll in skrolls | orderByPriority | filter:filterBy | orderBy:sortBy">
-			<div ng-show="skroll.head.visibility === 'public'" skroll-button </div>
+			<div ng-show="skroll.head.owner === uid" skroll-button </div>
 		</li>
 </div>
-<div signinbutton-directive></div>
-<div dockdir></div>
