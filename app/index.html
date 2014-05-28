@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<meta charset="utf-8">
 <html ng-app="skrollsApp">
 	<head>
 		<title>Skrolls</title>
@@ -24,7 +23,15 @@
 	<body>
 		<div class="wordcloud" id="clouddiv" onclick="gocloud()">
 			<script src="scripts/wordCloud.js"></script>
+			<span class="imgcaption">-Click to close-</span>
 		</div>
 		<div ng-view></div>
 	</body>
+	<script type="text/javascript">
+		(function() {
+			var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+			po.src = 'https://apis.google.com/js/platform.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+		})();
+	</script>
 </html>

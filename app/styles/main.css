@@ -41,13 +41,25 @@ hr{
 	height: 1px;
 	border: 0px solid #dddddd;
 }
+.imgcaption{
+	color: #999999;
+	font-size: 18px;
+	position: relative;
+	top: 95%;
+	font-style: italic;
+}
 .wordcloud{
 	z-index: 30;
-	position: absolute;
+	position: fixed;
 	background-image: url('/images/80pixb.png');
-	border-radius: 8px;
+	border-radius: 50px;
 	margin: auto;
 	margin-top: 50px;
+	min-width: 1800px;
+	min-height: 900px;
+	top: 0px;
+	bottom: 0px;
+	height: 90%;
 	left: 0px;
 	right: 0px;
 	width: 90%;
@@ -73,6 +85,14 @@ hr{
 }
 .userstatustext{
 	font-size: 13px;
+
+}
+#logincont{
+	position: fixed;
+	-webkit-transform: translateY(-50%);
+	-webkit-transform: translateX(-50%);
+	left: 50%;
+	top: 30%;
 
 }
 .fade{

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('skrollsApp', ['ngRoute','skrollControllers','skrollsServices', 'skrollsDirectives'])
+angular.module('skrollsApp', ['ngRoute','skrollControllers','skrollsServices', 'skrollsDirectives', 'firebase'])
 
 .config(['$routeProvider', 
     function($routeProvider) {
@@ -21,4 +21,15 @@ angular.module('skrollsApp', ['ngRoute','skrollControllers','skrollsServices', '
 				templateUrl: 'views/home.html',
 				controller: 'HomeController'
 			});
-    }]);
+    }])
+
+.run(['$rootScope', '$location', '$route', '$firebaseSimpleLogin', '$routeParams', function($rootScope, $location, $route, $firebaseSimpleLogin, $routeParams){
+	$rootScope.$on("$firebaseSimpleLogin:login", function(e, user){
+		console.log("authenticated");
+		$rootScope.user=user;
+		console.log(user);
+	});
+}]);
+
+
+
