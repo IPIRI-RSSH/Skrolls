@@ -13,10 +13,10 @@ angular.module('skrollsServices', ['ngResource','firebase'])
 		var UserFact={
 			errMsg: "", 
 			incorrect: false, 
-			user: '',
+			user: ''
 		};
 		var fireRef= new Firebase('https://skrollsapp.firebaseio.com');
-		var	auth =  new FirebaseSimpleLogin(fireRef, function(error, user) {
+		var auth =  new FirebaseSimpleLogin(fireRef, function(error, user) {
 			if (error) {
 	    		switch(error.code) {
 			    	case 'INVALID_EMAIL':
@@ -39,14 +39,14 @@ angular.module('skrollsServices', ['ngResource','firebase'])
 			   
 		  	} else if (user) {
 		  		UserFact.incorrect=false;
-		  		if(typeof UserFact.switchloggedin !== 'undefined') UserFact.switchloggedin();
+		  		UserFact.switchloggedin();
 		  		UserFact.user=user;
 		    	console.log('LOGGED IN = User ID: ' + user.uid + ', Provider: ' + user.provider);
-		  	} else {
 		  	}
-		  	if(typeof UserFact.switchloggedin !== 'undefined') UserFact.refresh();
+	
+		    UserFact.refresh();
 			});		
-		
+
 		UserFact.log = function(email, pass) {
 			auth.login('password', {
 				email: email,
@@ -77,18 +77,25 @@ angular.module('skrollsServices', ['ngResource','firebase'])
 			auth.login('github');
 		}
 		UserFact.getUser = function(){
-			auth
+			return UserFact.user;
 		}
 		return UserFact;
 	}])
 	.factory('nameFact', ['$firebase', function($firebase){
 		var nameFact={
-			username: ''
+			name: ''
 		};
 		nameFact.getName = function(usr){
 			var fireRef= new Firebase('https://skrollsapp.firebaseio.com/users/'+usr);
 			var nameobj=$firebase(fireRef);
-			nameFact.username=nameobj;
+			nameFact.name=nameobj;
+			return nameFact.name;
+		}
+		nameFact.setName = function(usr, newname){
+			var fireRef= new Firebase('https://skrollsapp.firebaseio.com/users/'+usr);
+			var nameobj=$firebase(fireRef);
+			nameobj.$set({"name": newname});
+			nameobj.$save;
 		}
 		return nameFact;
 		}])
@@ -100,4 +107,10 @@ angular.module('skrollsServices', ['ngResource','firebase'])
 		}
 		return redirector;
 	}])
-	
+	/*
+
+	 "users":{
+        "$any":{
+         ".read":"auth.id ==$any"
+        }
+        */

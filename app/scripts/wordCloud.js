@@ -34,21 +34,21 @@ var skrollsRef = new Firebase('https://skrollsapp.firebaseio.com/skrolls');
 		            //.range(["#666", "#555", "#454545", "#444", "#434343", "#333", "#323232", "#222", "#121212", "#111", "#050505", "#000"]);
 
 
-			  d3.layout.cloud().size([900, 600])
+			  d3.layout.cloud().size([1800, 900])
 				  .words(skrollsWords)
 				  .padding(2)
 				  .rotate(function() { return ~~(Math.random() * 2) * 90; })
 				  .font("Arial")
-				  .fontSize(function(d) { return d.size * 10; })
+				  .fontSize(function(d) { return d.size * 15; })
 				  .on("end", draw)
 				  .start();
 
 			  function draw(words) {
 				d3.select("div").append("svg")
-					.attr("width", 900)
-					.attr("height", 600)
+					.attr("width", 1800)
+					.attr("height", 900)
 				  .append("g")
-					.attr("transform", "translate(450,300)")
+					.attr("transform", "translate(900,400)")
 				  .selectAll("text")
 					.data(words)
 				  .enter().append("text")
