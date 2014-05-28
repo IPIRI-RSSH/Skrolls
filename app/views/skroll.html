@@ -22,7 +22,7 @@
 			<div class="g-plus" data-action="share" data-height="15" data-href="{{url}}"></div>
 
 		</ul>
-		<div ng-show="isopen"><br>
+		<div ng-show="posting"><br>
 			<ul class="container-wide">
 				<span class="boldtext1">Post as: </span>
 				<input class="textfield-name" ng-model="displayname.name" type="text" maxlength="15"></input>
@@ -43,12 +43,12 @@
 <div signinbutton-directive></div>
 <div dockdir></div>
 <script type="text/javascript">
-		(function() {
-			var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-			po.src = 'https://apis.google.com/js/platform.js';
-			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-		})();
-	</script>
+	(function() {
+		var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+		po.src = 'https://apis.google.com/js/platform.js';
+		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+	})();
+</script>
 
 
 
