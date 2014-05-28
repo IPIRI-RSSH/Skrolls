@@ -12,7 +12,7 @@
 			<option value="true">&#8595</option>
 		</select><br><br><hr>
 		<li class="animate-fixed" ng-repeat="skroll in skrolls | orderByPriority | filter:filterBy | orderBy:sortBy:sortType">
-			<div ng-show="skroll.head.owner === uid" skroll-button </div>
+			<div ng-show="skroll.head.owner === user.id" skroll-button </div>
 		</li>
 </div>
 <div signinbutton-directive></div>

@@ -53,12 +53,12 @@ angular.module('skrollControllers', ['ngAnimate','ngResource','ngRoute'])
 		}
 	}
 }])
-.controller('SkrollListController', ['$scope', '$routeParams',  'UserFact', '$firebase', 'redirector', 'SkrollFact', function($scope, $routeParams, UserFact, $firebase, redirector, SkrollFact) {
+.controller('SkrollListController', ['$scope', '$routeParams', '$firebase', '$rootScope', 'redirector', 'SkrollFact', function($scope, $routeParams, $firebase, $rootScope, redirector, SkrollFact) {
     $scope.skrolls = $firebase(new Firebase('https://skrollsapp.firebaseio.com/skrolls'));
 	$scope.sortBy = 'head.name';
 	$scope.sortType = "true";
-	$scope.uid = UserFact.user.id;
-	console.log($scope.uid);
+	$scope.user = $rootScope.user;
+	console.log("User: %s", $scope.user);
 }])
 .controller('SkrollController', ['$scope', '$routeParams', '$firebase', '$rootScope', 'redirector', 'nameFact', 'UserFact', function($scope, $routeParams, $firebase, $rootScope, redirector, nameFact, UserFact) {
    	var fireref=new Firebase('https://skrollsapp.firebaseio.com/skrolls/' + $routeParams.skrollID);
