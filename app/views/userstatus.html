@@ -4,7 +4,7 @@
 			<span class="docklabel">Sign in</span>
 		</div>
 		<div ng-show="loggedin">
-			<h4 class="userstatustext">{{user.email}}</h4>
+			<h4 class="userstatustext">{{user.email}}{{user.username}}</h4>
 			<div class="cplist">
 				<a class="cplist-item" onclick="gocloud()"><i class="fa fa-magic fa-fw"></i>&nbsp; Wordcloud</a>
 				<a class="cplist-item" ng-click="gomyskrolls()"><i class="fa fa-user fa-fw"></i>&nbsp; My Skrolls</a>

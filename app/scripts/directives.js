@@ -82,8 +82,8 @@ angular.module('skrollsDirectives', [])
 					$scope.loginform=true;
 				}
 			};
-			UserFact.makeName = function(id){
-				var userref=$firebase(new Firebase('https://skrollsapp.firebaseio.com/users/'+id));
+			UserFact.makeName = function(uid){
+				var userref=$firebase(new Firebase('https://skrollsapp.firebaseio.com/users/'+uid));
 				userref.$set({name: "New user"});
 			}
 			$scope.log = function() {
@@ -94,6 +94,7 @@ angular.module('skrollsDirectives', [])
 			$scope.reg = function() {
 				if (validate()){
 					UserFact.reg($scope.email, $scope.pass);
+					UserFact.log($scope.email, $scope.pass);
 				}
 			};
 			$scope.googlelog = function(){
