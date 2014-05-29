@@ -46,6 +46,8 @@ angular.module('skrollsServices', ['ngResource','firebase'])
 		    	UserFact.refresh();
 		  	} else{
 		  		$rootScope.user=null;
+		  		//$rootScope.user.id='22';
+		  		UserFact.user.id='22';
 		  		if(typeof UserFact.switchloggedin !== 'undefined'){
 		  			UserFact.switchloggedin();
 		  			UserFact.refresh();
@@ -106,6 +108,7 @@ angular.module('skrollsServices', ['ngResource','firebase'])
 			name: ''
 		};
 		nameFact.getName = function(usr){
+			if (typeof usr === 'undefined') usr= '22';
 			var fireRef= new Firebase('https://skrollsapp.firebaseio.com/users/'+usr);
 			var nameobj=$firebase(fireRef);
 			nameFact.name=nameobj;

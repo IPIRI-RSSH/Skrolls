@@ -25,12 +25,16 @@ angular.module('skrollControllers', ['ngAnimate','ngResource','ngRoute'])
 				update(nameExist, skrollID, skrollVis, ownerID);
 			});
 		}
+		else{
+			$scope.showErr = true;
+			$scope.err = "Enter a name!";
+		}
 	}
 	// create new skroll and push to base
 	var update = function(nameExist, skrollID, skrollVis, ownerID) {
 		if(!nameExist) {
 			$scope.skrollsRef = $firebase($scope.dataRef);
-			$scope.skrollsRef.$add({name: ""}).then(function(ref) {
+			$scope.skrollsRef.$add({head:{postCount: 0}}).then(function(ref) {
 				$scope.skrollURL = ref.name();
 				if(UserFact.user == null) { 
 					$scope.skrollsRef.$child($scope.skrollURL).$set({head: {name: $scope.skrollname, permissions: "writeable", postCount: 0, visibility: "public", skrollID: $scope.skrollURL}});
@@ -48,7 +52,7 @@ angular.module('skrollControllers', ['ngAnimate','ngResource','ngRoute'])
 			} else{
 				$scope.showErr=true;
 				$scope.err="This Skroll is private!";
-				$scope.$apply();
+				if (!$scope.$$phase) $scope.$apply();
 			}
 		}
 	}
@@ -58,7 +62,6 @@ angular.module('skrollControllers', ['ngAnimate','ngResource','ngRoute'])
 	$scope.sortBy = 'head.name';
 	$scope.sortType = "true";
 	$scope.user = $rootScope.user;
-	console.log("User: %s", $scope.user);
 }])
 .controller('SkrollController', ['$scope', '$routeParams', '$firebase', '$rootScope', 'redirector', 'nameFact', 'UserFact', function($scope, $routeParams, $firebase, $rootScope, redirector, nameFact, UserFact) {
    	var fireref=new Firebase('https://skrollsapp.firebaseio.com/skrolls/' + $routeParams.skrollID);
@@ -66,8 +69,7 @@ angular.module('skrollControllers', ['ngAnimate','ngResource','ngRoute'])
    	$scope.owner=false;
     $scope.skroll=$firebase(fireref);
    	$scope.skroll.$on('loaded', function(){
-		$scope.displayname=nameFact.getName(UserFact.user.id);		
-		console.log($scope.displayname.name);
+		$scope.displayname=nameFact.getName(UserFact.user.id);	
    	});
    	fireref.once('value', function(snap){
    		if(snap.val().head.owner == UserFact.user.id){
@@ -143,3 +145,9 @@ angular.module('skrollControllers', ['ngAnimate','ngResource','ngRoute'])
 		}
 	}
 }]);
+
+
+/*
+"newData.child('text').isString() && newData.child('text').val().length <= 1000 
+            && newData.child('author').isString() && newData.child('author').val().length <= 15"
+*/

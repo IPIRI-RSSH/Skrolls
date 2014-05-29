@@ -31,7 +31,9 @@ var up = function(buf) {
 	var fill = d3.scale.category10();
 	  var width = window.innerWidth;
 	  var height = window.innerHeight;
-	  console.log("width: %s, height: %s", width, height);
+	  //console.log("width: %s, height: %s", width, height);
+	  width= width*0.8;
+	  height= height*0.8;
 	  d3.layout.cloud().size([width, height])
 		  .words(skrollsWords)
 		  .padding(2)
@@ -46,7 +48,7 @@ var up = function(buf) {
 			.attr("width", width)
 			.attr("height", height)
 		  .append("g")
-			.attr("transform", "translate(800,300)")
+			.attr("transform", "translate("+width/2+","+height/2+")")
 		  .selectAll("text")
 			.data(words)
 		  .enter().append("text")
